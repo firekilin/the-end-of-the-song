@@ -1,0 +1,35 @@
+{
+  "name": "the-end-of-the-song",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node app.js",
+    "start": "set NODE_ENV=development && node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firekilin/the-end-of-the-song.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/firekilin/the-end-of-the-song/issues"
+  },
+  "homepage": "https://github.com/firekilin/the-end-of-the-song#readme",
+  "dependencies": {
+    "bootstrap": "^5.0.2",
+    "bootstrap-icons": "^1.5.0",
+    "config": "^3.3.6",
+    "ejs": "^3.1.6",
+    "ejs-locals": "^1.0.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "jquery": "^3.6.0",
+    "jquery-ui-bundle": "^1.12.1-migrate",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0"
+  }
+}
