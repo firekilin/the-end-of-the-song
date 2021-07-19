@@ -1,9 +1,0 @@
-app:
-  port: 3000
-
-db:
-  host: 'kilincat.servegame.com'
-  port: 3306
-  database: 'end_song'
-  user: 'kilin'
-  password: '13145270'
