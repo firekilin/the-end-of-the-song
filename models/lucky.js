@@ -112,7 +112,7 @@ exports.delproduct = async(req, res) => {
 exports.starting = async(req, res) => {
   await query ('TRUNCATE TABLE ans_show;');
   let productItem = req.body.productId;
-  if (productItem[0]){
+  if (productItem != undefined){
     for (let i = 0;i < productItem.length;i ++){
       let memberList = await query (`SELECT PK_id,member_id FROM product_check where product_id='${productItem[i]}' and PK_status='1';`);
       if (memberList[0]){
