@@ -13,43 +13,33 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container"> 
+
+      <input id='memberId' type="hidden" value='<%= memberId %>'>
+      <input id='password' type='hidden' value='<%= password %>'>
       <button class="btn btn-info" onClick="location.href='./index'">參加頁面</button>
+      <% if(password=='5270'){%>
       <button onClick="location.href='./manage'">抽獎頁面</button>
+      <% } %>
       <button onClick="location.href='./show'">結果頁面</button>
       <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th scope="col">編號/報名</th>
             <th scope="col">商品</th>
-            <th scope="col">中獎清單</th>
-            <th scope="col">未中獎清單</th>
+            <th scope="col">下一輪名單</th>
+            <th scope="col">本輪名單</th>
           </tr>
         </thead>
         <tbody id='indexList'>
 
-          <tr>
-            <th scope="row">1 <button>報名</button></th>
-            <td>商品1 
-              <button>刪除商品</button>
-            </td>
-            <td>
-              <div class='yesList'>
-                <p>麒麟</p>
-                <p>錒名</p>
-              </div>
-            </td>
-            <td> 
-              <div class='noList'>
-                <p>麒麟</p>
-                <p>錒名</p>
-              </div>
-          </td>
-          </tr>
-         
         </tbody>
       </table>
-      <button>新增商品</button>
+      <div id='addproduct' hidden='true'>
+        <button   onclick='index.addproduct()'>新增商品</button>
+        名稱：<input id='productName'  value=''>
+      </div>
+ 
         <footer>
           <p>&copy; 2021 曲終人散</p>
         </footer>

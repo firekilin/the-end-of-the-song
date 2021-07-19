@@ -1,16 +1,54 @@
 const router = require ('express').Router ();
 const member = require ('../models/member');
-const inventory = require ('../models/lucky');
+const lucky = require ('../models/lucky');
 
 const bodyParser = require ('body-parser'); //設定取得req.body
 router.use ( bodyParser.json () ); //req.body支援json格式
 router.use ( bodyParser.urlencoded ( { extended: true } ) ); //解析內容 
 
 
-//取得member name 拿來用 dropdownlist
-router.post ('/getPmData', async(req, res) => {
-  res.send (await project.getPmData (req, res));
+//登入
+router.post ('/logining', async(req, res) => {
+  res.send (await member.login (req, res));
 });
 
+//獎品清單
+router.post ('/productList', async(req, res) => {
+  res.send (await lucky.productList (req, res));
+});
 
+//中獎名單
+router.post ('/getList', async(req, res) => {
+  res.send (await lucky.getList (req, res));
+});
+
+//參加抽獎
+router.post ('/checkin', async(req, res) => {
+  res.send (await lucky.checkin (req, res));
+});
+
+//新增獎品
+router.post ('/addProduct', async(req, res) => {
+  res.send (await lucky.addProduct (req, res));
+});
+
+//標記目前抽獎
+router.post ('/setstar', async(req, res) => {
+  res.send (await lucky.setstar (req, res));
+});
+
+//刪除獎品
+router.post ('/delproduct', async(req, res) => {
+  res.send (await lucky.delproduct (req, res));
+});
+
+//開始抽獎
+router.post ('/starting', async(req, res) => {
+  res.send (await lucky.starting (req, res));
+});
+
+//抽獎公告
+router.post ('/showing', async(req, res) => {
+  res.send (await lucky.showing (req, res));
+});
 module.exports = router ;

@@ -8,13 +8,28 @@
   <!--bootstrap-->
   <link href="/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+     <!--manage.js-->
+     <script src="/public/js/manage.js" defer="defer"></script>
 </head>
 
 <body>
     <div class="container">
       <button onClick="location.href='./index'">參加頁面</button>
-      <button class="btn btn-info" onClick="location.href='./manage'">抽獎頁面</button>
+      <% if(password=='5270'){%>
+        <button onClick="location.href='./manage'">抽獎頁面</button>
+        <% } %>
       <button onClick="location.href='./show'">結果頁面</button>
+      <div class="">
+        <div id='productList'>
+        </div>
+        <div  id="sendtotal">
+        </div>
+        <select id='productSelect'></select>
+        <button onclick='manage.addproduct()'>新增商品</button>
+
+        <button onclick='manage.starting()'>開始抽獎</button>
+      </div>
+     
         <footer>
           <p>&copy; 2021 曲終人散</p>
         </footer>
