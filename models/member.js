@@ -20,7 +20,7 @@ exports.login2 = async (req, res) => {
   let cookieName = req.cookies.name;
   if (cookieName != undefined){
     let check = await query (`select member_id,member_name,level from member where member_name='${cookieName}'`);
-    if (check){
+    if (check[0]){
       let password = 0;
       if (check[0].level == 1){
         password = '5270';
@@ -31,6 +31,7 @@ exports.login2 = async (req, res) => {
         pass: true 
       };
     } else {
+      res.clearCookie ('name');
       return { pass: false };
     }
   } else {
@@ -38,6 +39,12 @@ exports.login2 = async (req, res) => {
   } 
   
   
+};
+
+//登出
+exports.logout = async(req, res) => {
+  res.clearCookie ('name');
+  return true;
 };
 
 module.exports = exports;
