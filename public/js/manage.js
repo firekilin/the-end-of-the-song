@@ -23,7 +23,7 @@ $ (() => {
     $.post ('/api/starting', { productId: productId }, (data, status) => {
       alert (data);
     });
-   
+    $ ('#sendtotal')[0].innerHTML = '';
   };
 
   manage.select ();

@@ -110,7 +110,6 @@ exports.delproduct = async(req, res) => {
 
 //開始抽獎
 exports.starting = async(req, res) => {
-  await query ('TRUNCATE TABLE ans_show;');
   let productItem = req.body.productId;
   if (productItem != undefined){
     for (let i = 0;i < productItem.length;i ++){
@@ -141,7 +140,7 @@ exports.starting = async(req, res) => {
 //公告中獎
 exports.showing = async(req, res) => {
   let showList = [];
-  let showItem = await query (`SELECT member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id);`);
+  let showItem = await query (`SELECT show_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) order by show_id desc ;`);
   for (let i = 0;i < showItem.length;i ++){
     showList.push ({
       memberName: showItem[i].member_name,
