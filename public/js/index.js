@@ -16,7 +16,7 @@ $ (() => {
         if (data[i].pass){
         
           $ ('#indexList')[0].innerHTML += `<tr>
-          <th scope="row">${data[i].productStar == 0 ? '未' : '有'}<button onclick='index.setstar(${data[i].productId})'>☆</button></th>
+          <th scope="row">${data[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.setstar(${data[i].productId})'>☆</button></th>
           <td>${data[i].productName} 
           <button onclick='index.delproduct(${data[i].productId})'>刪除商品</button>
           </td>
@@ -34,7 +34,7 @@ $ (() => {
         } else {
         
           $ ('#indexList')[0].innerHTML += `<tr>
-          <th scope="row">${data[i].productStar == 0 ? '未' : '有'}<button onclick='index.checkin(${data[i].productId})'>報名</button></th>
+          <th scope="row">${data[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.checkin(${data[i].productId})'>${data[i].productStatus == null ? '報名' : data[i].productStatus == '1' ? '已報名(本輪)' : '已報名(下一輪)' }</button></th>
           <td>${data[i].productName}
           </td>
           <td>

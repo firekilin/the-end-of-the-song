@@ -5,14 +5,24 @@ const query = db.query;
 //取得商品列表
 exports.productList = async (req, res) => {
   let pass = req.body.member == 1 ? true : false;
-  let productItem = await query (`SELECT product_id,product_name,product_star FROM product order by product_star desc;`);
+  let productItem = await query (`SELECT product.product_id,product_name,product_star,PK_status FROM
+  product 
+  left join (
+   SELECT product_id,PK_status 
+     FROM end_song.product_check 
+     where member_id='2'
+ ) as checking 
+ on product.product_id=checking.product_id 
+ order by product_star desc;`);
   let productList = [];
   for (let i = 0;i < productItem.length;i ++){
+    
     productList.push (
       { 
         productId: productItem[i].product_id,
         productName: productItem[i].product_name,
         productStar: productItem[i].product_star, 
+        productStatus: productItem[i].PK_status,
         pass: pass,
       }
     );
@@ -112,7 +122,7 @@ exports.delproduct = async(req, res) => {
 exports.starting = async(req, res) => {
   let productItem = req.body.productId;
   if (productItem != undefined){
-    for (let i = 0;i < productItem.length;i ++){
+    for (let i = (productItem.length - 1);i >= 0 ;i --){
       let memberList = await query (`SELECT PK_id,member_id FROM product_check where product_id='${productItem[i]}' and PK_status='1';`);
       if (memberList[0]){
         let getit = Math.floor (Math.random () * memberList.length);
