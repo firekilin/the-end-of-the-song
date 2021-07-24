@@ -121,12 +121,13 @@ exports.delproduct = async(req, res) => {
 //開始抽獎
 exports.starting = async(req, res) => {
   let productItem = req.body.productId;
+  let thisTime = new Date ();
   if (productItem != undefined){
     for (let i = (productItem.length - 1);i >= 0 ;i --){
       let memberList = await query (`SELECT PK_id,member_id FROM product_check where product_id='${productItem[i]}' and PK_status='1';`);
       if (memberList[0]){
         let getit = Math.floor (Math.random () * memberList.length);
-        await query (`INSERT INTO ans_show (product_id, member_id) VALUES ('${productItem[i]}', '${memberList[getit].member_id}'); `);
+        await query (`INSERT INTO ans_show (product_id, member_id,date) VALUES ('${productItem[i]}', '${memberList[getit].member_id}','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}'); `);
         await query (`UPDATE product_check SET PK_status = '0' WHERE (PK_id = '${memberList[getit].PK_id}');  `);
       } else {
         let check = await query (`SELECT PK_id FROM product_check where product_id='${productItem[i]}' and PK_status=0;`);
@@ -134,9 +135,9 @@ exports.starting = async(req, res) => {
           for (let j = 0;j < check.length;j ++){
             await query (`UPDATE product_check SET PK_status = '1' WHERE (PK_id = '${check[j].PK_id}');`);
           }
-          i --;
+          i ++;
         } else {
-          await query (`INSERT INTO ans_show (product_id, member_id) VALUES ('${productItem[i]}', '5'); `);
+          await query (`INSERT INTO ans_show (product_id, member_id,date) VALUES ('${productItem[i]}', '5','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}'); `);
         }
       }
     }
@@ -150,7 +151,7 @@ exports.starting = async(req, res) => {
 //公告中獎
 exports.showing = async(req, res) => {
   let showList = [];
-  let showItem = await query (`SELECT show_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) order by show_id desc ;`);
+  let showItem = await query (`SELECT show_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) order by show_id desc limit 100;`);
   for (let i = 0;i < showItem.length;i ++){
     showList.push ({
       memberName: showItem[i].member_name,

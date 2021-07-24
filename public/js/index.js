@@ -77,6 +77,7 @@ $ (() => {
     $.post ('/api/checkin', { productId: productId, memberId: $ ('#memberId').val () }, (data, status) => {
       alert (data);
       index.getList (productId);
+      index.loading ();
     } );
   };
 
