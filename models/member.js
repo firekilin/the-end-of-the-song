@@ -8,8 +8,12 @@ exports.login = async (req, res) => {
   if (check[0]){
     res.cookie ('name', req.body.name);
   } else {
-    await query (`INSERT INTO member (member_name) VALUES('${req.body.name}');`);
-    return '已完成註冊 請重新輸入';
+    if (req.body.name != ''){
+      await query (`INSERT INTO member (member_name) VALUES('${req.body.name}');`);
+      return '已完成註冊 請重新輸入';
+    } else {
+      return '請輸入名字';
+    }
   }
 
   return true;
