@@ -1,11 +1,10 @@
 const db = require ('./getDB');
 const query = db.query;
 
-
 //取得商品列表
 exports.productList = async (req, res) => {
   let pass = req.body.member == 1 ? true : false;
-  let productItem = await query (`SELECT product.product_id,product_name,product_star,PK_status FROM
+  let productItem = await query (`SELECT product_start,product_end,product.product_id,product_name,product_star,PK_status FROM
   product 
   left join (
    SELECT product_id,PK_status 
@@ -13,12 +12,14 @@ exports.productList = async (req, res) => {
      where member_id='2'
  ) as checking 
  on product.product_id=checking.product_id 
- order by product_star desc;`);
+ order by product_star desc,product_name desc;`);
   let productList = [];
   for (let i = 0;i < productItem.length;i ++){
     
     productList.push (
       { 
+        productStart: productItem[i].product_start,
+        productEnd: productItem[i].product_end,
         productId: productItem[i].product_id,
         productName: productItem[i].product_name,
         productStar: productItem[i].product_star, 
@@ -151,15 +152,38 @@ exports.starting = async(req, res) => {
 //公告中獎
 exports.showing = async(req, res) => {
   let showList = [];
-  let showItem = await query (`SELECT show_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) order by show_id desc limit 100;`);
+  let showItem = await query (`SELECT show_id,member.member_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) order by show_id desc limit 100;`);
   for (let i = 0;i < showItem.length;i ++){
     showList.push ({
       memberName: showItem[i].member_name,
       productName: showItem[i].product_name,
+      memberId: showItem[i].member_id,
       date: showItem[i].date 
     });
   }
   return showList;
+};
+
+//設定報名時間
+exports.setStart = async(req, res) => {
+  let datetime = req.body.dateTime == '' ? 'null' : `'${req.body.dateTime}'`;
+  let check = await query (`UPDATE product SET product_start = ${datetime} WHERE (product_id = '${req.body.productId}');  `);
+  if (check){
+    return '成功設定';
+  } else {
+    return '失敗';
+  }
+};
+
+//設定活動時間
+exports.setEnd = async(req, res) => {
+  let datetime = req.body.dateTime == '' ? 'null' : `'${req.body.dateTime}'`;
+  let check = await query (`UPDATE product SET product_end = ${datetime} WHERE (product_id = '${req.body.productId}');  `);
+  if (check){
+    return '成功設定';
+  } else {
+    return '失敗';
+  }
 };
 
 module.exports = exports;

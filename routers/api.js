@@ -51,4 +51,16 @@ router.post ('/starting', async(req, res) => {
 router.post ('/showing', async(req, res) => {
   res.send (await lucky.showing (req, res));
 });
+
+//設定報名時間
+router.post ('/setStart', async(req, res) => {
+  res.send (await lucky.setStart (req, res));
+});
+
+//設定抽獎時間
+router.post ('/setEnd', async(req, res) => {
+  res.send (await lucky.setEnd (req, res));
+});
+
+
 module.exports = router ;

@@ -15,6 +15,7 @@
 <body>
     <div class="container">
       <main>
+        <input id='memberId' type="hidden" value='<%= memberId %>'>
         <button onClick="location.href='./index'">參加頁面</button>
         <% if(password=='5270'){%>
           <button onClick="location.href='./manage'">抽獎頁面</button>
