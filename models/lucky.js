@@ -9,7 +9,7 @@ exports.productList = async (req, res) => {
   left join (
    SELECT product_id,PK_status 
      FROM end_song.product_check 
-     where member_id='2'
+     where member_id='${req.body.member}'
  ) as checking 
  on product.product_id=checking.product_id 
  order by product_star desc,product_name desc;`);
