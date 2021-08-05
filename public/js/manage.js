@@ -26,6 +26,17 @@ $ (() => {
     $ ('#sendtotal')[0].innerHTML = '';
   };
 
+  manage.setDateStart = () => {
+    let productId = [];
+    for (let i = 0;i < $ ('.product').length;i ++){
+      productId.push ($ ('.product')[i].value);
+    }
+    $.post ('/api/setDatestart', { productId: productId, setDate: $ (`#setDate`).val () }, (data, status) => {
+      alert (data);
+    });
+    $ ('#sendtotal')[0].innerHTML = '';
+  };
+
   manage.select ();
 });
 

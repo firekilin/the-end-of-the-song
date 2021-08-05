@@ -62,5 +62,10 @@ router.post ('/setEnd', async(req, res) => {
   res.send (await lucky.setEnd (req, res));
 });
 
+//定時抽獎
+router.post ('/setDateStart', async(req, res) => {
+  res.send (await lucky.setSchedule (req, res));
+});
+
 
 module.exports = router ;

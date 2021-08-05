@@ -1,5 +1,7 @@
 const db = require ('./getDB');
 const query = db.query;
+var schedule = require (`node-schedule`);
+
 
 //取得商品列表
 exports.productList = async (req, res) => {
@@ -185,5 +187,23 @@ exports.setEnd = async(req, res) => {
     return '失敗';
   }
 };
+
+//定時抽獎
+exports.setSchedule = async(req, res) => {
+  let productItem = req.body.productId;
+  let setDate = new Date (req.body.setDate);
+  if (productItem != undefined){
+    schedule.scheduleJob (setDate, () => {
+      this.starting (req, res);
+    }); 
+
+    return '完成定時';
+  } else {
+    return '失敗';
+  }
+ 
+
+};
+
 
 module.exports = exports;
