@@ -13,16 +13,11 @@ $ (() => {
       }
 
       for (let i = 0;i < data.length;i ++){
-        let dateStart = new Date (data[i].productStart == null ? '' : data[i].productStart);
         let dateEnd = new Date (data[i].productEnd == null ? '' : data[i].productEnd);
         if (data[i].pass){
          
           $ ('#indexList')[0].innerHTML += `<tr>
           <th scope="row" ${data[i].productStar == 0 ? '' : 'style="color: red;"'} >${data[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.setstar(${data[i].productId})'>☆</button></th>
-          <td><input type="datetime-local" id='productStart${data[i].productId}' value="${dateStart.getTime ().toString () == 'NaN' ? '' : `${dateStart.getFullYear ()}-${(dateStart.getMonth () + 1) < 10 ? '0' + (dateStart.getMonth () + 1) : (dateStart.getMonth () + 1)}-${dateStart.getDate () < 10 ? '0' + dateStart.getDate () : dateStart.getDate ()}T${dateStart.getHours () < 10 ? '0' + dateStart.getHours () : dateStart.getHours ()}:${dateStart.getMinutes () < 10 ? '0' + dateStart.getMinutes () : dateStart.getMinutes ()}`}">
-          <button onclick='index.setStart(${data[i].productId})'>設定時間</button>
-          <button onclick='index.cleanStart(${data[i].productId})'>清除</button>
-          </td>
           <td><input type="datetime-local" id='productEnd${data[i].productId}' value="${dateEnd.getTime ().toString () == 'NaN' ? '' : `${dateEnd.getFullYear ()}-${(dateEnd.getMonth () + 1) < 10 ? '0' + (dateEnd.getMonth () + 1) : (dateEnd.getMonth () + 1)}-${dateEnd.getDate () < 10 ? '0' + dateEnd.getDate () : dateEnd.getDate ()}T${dateEnd.getHours () < 10 ? '0' + dateEnd.getHours () : dateEnd.getHours ()}:${dateEnd.getMinutes () < 10 ? '0' + dateEnd.getMinutes () : dateEnd.getMinutes ()}`}">
           <button onclick='index.setEnd(${data[i].productId})'>設定時間</button>
           <button onclick='index.cleanEnd(${data[i].productId})'>清除</button>
@@ -45,8 +40,6 @@ $ (() => {
         
           $ ('#indexList')[0].innerHTML += `<tr>
           <th scope="row" ${data[i].productStar == 0 ? '' : 'style="color: red;"'}>${data[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.checkin(${data[i].productId})'>${data[i].productStatus == null ? '報名' : data[i].productStatus == '1' ? '已報名(本輪)' : '已報名(下一輪)' }</button></th>
-          <td>${dateStart.getTime ().toString () == 'NaN' ? '' : `${dateStart.getFullYear ()}-${(dateStart.getMonth () + 1) < 10 ? '0' + (dateStart.getMonth () + 1) : (dateStart.getMonth () + 1)}-${dateStart.getDate () < 10 ? '0' + dateStart.getDate () : dateStart.getDate ()} ${dateStart.getHours () < 10 ? '0' + dateStart.getHours () : dateStart.getHours ()}:${dateStart.getMinutes () < 10 ? '0' + dateStart.getMinutes () : dateStart.getMinutes ()}`}
-          </td>
           <td>${dateEnd.getTime ().toString () == 'NaN' ? '' : `${dateEnd.getFullYear ()}-${(dateEnd.getMonth () + 1) < 10 ? '0' + (dateEnd.getMonth () + 1) : (dateEnd.getMonth () + 1)}-${dateEnd.getDate () < 10 ? '0' + dateEnd.getDate () : dateEnd.getDate ()} ${dateEnd.getHours () < 10 ? '0' + dateEnd.getHours () : dateEnd.getHours ()}:${dateEnd.getMinutes () < 10 ? '0' + dateEnd.getMinutes () : dateEnd.getMinutes ()}`} 
           </td>
           <td>${data[i].productName}
@@ -70,13 +63,6 @@ $ (() => {
     });
   };
 
-  //設定報名時間
-  index.setStart = (productId) => {
-    $.post ('/api/setStart', { productId: productId, dateTime: $ (`#productStart${productId}`).val () }, (data, statue) => {
-      alert (data);
-      index.loading ();
-    });
-  };
   //設定抽獎時間
   index.setEnd = (productId) => {
     $.post ('/api/setEnd', { productId: productId, dateTime: $ (`#productEnd${productId}`).val () }, (data, statue) => {
@@ -114,7 +100,9 @@ $ (() => {
   //報名
   index.checkin = (productId) => {
     $.post ('/api/checkin', { productId: productId, memberId: $ ('#memberId').val () }, (data, status) => {
-      alert (data);
+      if (data == '失敗'){
+        alert (data);
+      }
       index.getList (productId);
       index.loading ();
     } );

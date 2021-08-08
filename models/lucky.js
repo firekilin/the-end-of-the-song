@@ -6,7 +6,7 @@ var schedule = require (`node-schedule`);
 //取得商品列表
 exports.productList = async (req, res) => {
   let pass = req.body.member == 1 ? true : false;
-  let productItem = await query (`SELECT product_start,product_end,product.product_id,product_name,product_star,PK_status FROM
+  let productItem = await query (`SELECT product_end,product.product_id,product_name,product_star,PK_status FROM
   product 
   left join (
    SELECT product_id,PK_status 
@@ -20,7 +20,6 @@ exports.productList = async (req, res) => {
     
     productList.push (
       { 
-        productStart: productItem[i].product_start,
         productEnd: productItem[i].product_end,
         productId: productItem[i].product_id,
         productName: productItem[i].product_name,
@@ -127,7 +126,7 @@ exports.starting = async(req, res) => {
   let thisTime = new Date ();
   if (productItem != undefined){
     for (let i = (productItem.length - 1);i >= 0 ;i --){
-      let memberList = await query (`SELECT PK_id,member_id FROM product_check where product_id='${productItem[i]}' and PK_status='1';`);
+      let memberList = await query (`SELECT PK_id,member_id FROM product_check left join member using(member_id) where  product_id='${productItem[i]}' and PK_status='1' and member_status='0';`);
       if (memberList[0]){
         let getit = Math.floor (Math.random () * memberList.length);
         await query (`INSERT INTO ans_show (product_id, member_id,date) VALUES ('${productItem[i]}', '${memberList[getit].member_id}','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}'); `);
@@ -166,16 +165,6 @@ exports.showing = async(req, res) => {
   return showList;
 };
 
-//設定報名時間
-exports.setStart = async(req, res) => {
-  let datetime = req.body.dateTime == '' ? 'null' : `'${req.body.dateTime}'`;
-  let check = await query (`UPDATE product SET product_start = ${datetime} WHERE (product_id = '${req.body.productId}');  `);
-  if (check){
-    return '成功設定';
-  } else {
-    return '失敗';
-  }
-};
 
 //設定活動時間
 exports.setEnd = async(req, res) => {

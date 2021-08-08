@@ -67,5 +67,20 @@ router.post ('/setDateStart', async(req, res) => {
   res.send (await lucky.setSchedule (req, res));
 });
 
+//會員管理
+router.post ('/memberList', async(req, res) => {
+  res.send (await member.memberList (req, res));
+});
+
+//修改抽獎權
+router.post ('/memberStatus', async(req, res) => {
+  res.send (await member.memberStatus (req, res));
+});
+
+//清除報名
+router.post ('/memberDel', async(req, res) => {
+  res.send (await member.memberClear (req, res));
+});
+
 
 module.exports = router ;

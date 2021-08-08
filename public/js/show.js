@@ -17,7 +17,7 @@ $ (() => {
           <td class='table-dark'>${setdate.getMonth () + 1}/${setdate.getDate ()} ${setdate.getHours ()}:${setdate.getMinutes ()}:${setdate.getSeconds ()}</td>
           </tr>`;
           $ ('#indexList')[0].innerHTML += `<tr>
-          <td ${data[i].memberId == $ ('#memberId').val () ? style = 'color:red;' : ''} >${data[i].productName}</td>
+          <td ${data[i].memberId == $ ('#memberId').val () ? 'style = "color:red;"' : ''} >${data[i].productName}</td>
           <td>${data[i].memberName}</td>
           </tr>`;
         } else if (setdate.getTime () != new Date (data[i].date).getTime ()){

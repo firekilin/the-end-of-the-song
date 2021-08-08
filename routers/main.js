@@ -5,7 +5,11 @@ const member = require ('../models/member');
 router.get ('/index', async(req, res) => {
   let level = await member.login2 (req, res);
   if (level.pass){
-    res.render ('index', { memberId: level.memberId, password: level.password });
+    res.render ('index', {
+      MWId: level.MWId,
+      memberId: level.memberId,
+      password: level.password 
+    });
   } else {
     res.redirect ('login');
   }
@@ -24,11 +28,15 @@ router.get ('/login', async(req, res) => {
 
 //管理
 router.get ('/manage', async(req, res) => {
-  let level = await member.login2 (req, res);
+  let level = await member.login3 (req, res);
   if (level.pass){
-    res.render ('manage', { memberId: level.memberId, password: level.password });
+    res.render ('manage', {
+      MWId: level.MWId,
+      memberId: level.memberId,
+      password: level.password 
+    });
   } else {
-    res.redirect ('login');
+    res.redirect ('index');
   }
 });
 
@@ -36,7 +44,11 @@ router.get ('/manage', async(req, res) => {
 router.get ('/show', async(req, res) => {
   let level = await member.login2 (req, res);
   if (level.pass){
-    res.render ('show', { memberId: level.memberId, password: level.password });
+    res.render ('show', {
+      MWId: level.MWId,
+      memberId: level.memberId,
+      password: level.password 
+    });
   } else {
     res.redirect ('login');
   }
@@ -47,6 +59,20 @@ router.get ('/logout', async(req, res) => {
   let check = await member.logout (req, res);
   if (check){
     res.redirect ('login');
+  } else {
+    res.redirect ('index');
+  }
+});
+
+//會員管理系統
+router.get ('/manageMember', async(req, res) => {
+  let level = await member.login3 (req, res);
+  if (level.pass){
+    res.render ('member', {
+      MWId: level.MWId,
+      memberId: level.memberId,
+      password: level.password 
+    });
   } else {
     res.redirect ('index');
   }
