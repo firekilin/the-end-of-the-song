@@ -144,4 +144,28 @@ exports.MWList = async(req, res) => {
     return '失敗';
   }
 };
+
+//顯示密碼
+exports.MWPassword = async(req, res) => {
+  try {
+    let check = await query (`select MW_password from member_world where MW_id='${req.body.MW}'`);
+    return { password: check[0].MW_password };
+  } catch (e){
+    return '失敗';
+  }
+};
+
+//王國密碼
+exports.MWChangePassword = async(req, res) => {
+  try {
+    let check = await query (`UPDATE member_world SET MW_password = '${req.body.MWPassword}' WHERE (MW_id = '${req.body.MW}');    `);
+    if (check){
+      return '成功修改';
+    } else {
+      return '失敗';
+    }
+  } catch (e){
+    return '失敗';
+  }
+};
 module.exports = exports;

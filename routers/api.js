@@ -87,4 +87,13 @@ router.post ('/MWList', async(req, res) => {
   res.send (await member.MWList (req, res));
 });
 
+//取得王國密碼
+router.post ('/getMWPassword', async(req, res) => {
+  res.send (await member.MWPassword (req, res));
+});
+//修改密碼
+router.post ('/setMWPassword', async(req, res) => {
+  res.send (await member.MWChangePassword (req, res));
+});
+
 module.exports = router ;

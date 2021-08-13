@@ -14,7 +14,8 @@
 
 <body>
     <div class="container"> 
-
+      <input id='memberId' type="hidden" value='<%= memberId %>'>
+      <input id='password' type='hidden' value='<%= password %>'>
       <input id='MWId' type='hidden' value='<%= MWId %>'>
       <button onClick="location.href='./index'">參加頁面</button>
       <% if(password=='5270'){%>
@@ -23,7 +24,7 @@
       <% } %>
       <button onClick="location.href='./show'">結果頁面</button>
       <% if(password=='5270'){%>
-        <p>設定王國密碼<input id='MWpassword' type='text'><button onclick="member.setpassword();" >修改</button></p>
+        <p>設定王國密碼<input id='MWpassword' type='text'><button onclick="member.setPassword();" >修改</button></p>
         <% } %>
       <table class="table table-striped table-hover">
         <thead>

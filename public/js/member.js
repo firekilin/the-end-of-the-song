@@ -32,7 +32,24 @@ $ (() => {
       member.loading ();
     });
   };
+
+  //取得密碼
+  member.getPassword = () => {
+    $.post ('/api/getMWPassword', { MW: $ ('#MWId').val () }, (data, status) => {
+      $ ('#MWpassword').val (data.password);
+    });
+  };
+  //修改密碼
+  member.setPassword = () => {
+    $.post ('/api/setMWPassword', { MWPassword: $ ('#MWpassword').val (), MW: $ ('#MWId').val () }, (data, status) => {
+      alert (data);
+      member.getPassword ();
+    });
+  };
+
+  member.getPassword ();
   member.loading ();
+  
 });
 
 

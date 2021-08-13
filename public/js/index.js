@@ -8,51 +8,51 @@ $ (() => {
   index.loading = () => {
     $.post ('/api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
       $ ('#indexList')[0].innerHTML = '';
-      if (data[0].pass){
+      if (data.pass){
         $ ('#addproduct')[0].hidden = false;
       }
 
-      for (let i = 0;i < data.length;i ++){
-        let dateEnd = new Date (data[i].productEnd == null ? '' : data[i].productEnd);
-        if (data[i].pass){
+      for (let i = 0;i < data.productList.length;i ++){
+        let dateEnd = new Date (data.productList[i].productEnd == null ? '' : data.productList[i].productEnd);
+        if (data.pass){
          
           $ ('#indexList')[0].innerHTML += `<tr>
-          <th scope="row" ${data[i].productStar == 0 ? '' : 'style="color: red;"'} >${data[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.setstar(${data[i].productId})'>☆</button></th>
-          <td><input type="datetime-local" id='productEnd${data[i].productId}' value="${dateEnd.getTime ().toString () == 'NaN' ? '' : `${dateEnd.getFullYear ()}-${(dateEnd.getMonth () + 1) < 10 ? '0' + (dateEnd.getMonth () + 1) : (dateEnd.getMonth () + 1)}-${dateEnd.getDate () < 10 ? '0' + dateEnd.getDate () : dateEnd.getDate ()}T${dateEnd.getHours () < 10 ? '0' + dateEnd.getHours () : dateEnd.getHours ()}:${dateEnd.getMinutes () < 10 ? '0' + dateEnd.getMinutes () : dateEnd.getMinutes ()}`}">
-          <button onclick='index.setEnd(${data[i].productId})'>設定時間</button>
-          <button onclick='index.cleanEnd(${data[i].productId})'>清除</button>
+          <th scope="row" ${data.productList[i].productStar == 0 ? '' : 'style="color: red;"'} >${data.productList[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.setstar(${data.productList[i].productId})'>☆</button></th>
+          <td><input type="datetime-local" id='productEnd${data.productList[i].productId}' value="${dateEnd.getTime ().toString () == 'NaN' ? '' : `${dateEnd.getFullYear ()}-${(dateEnd.getMonth () + 1) < 10 ? '0' + (dateEnd.getMonth () + 1) : (dateEnd.getMonth () + 1)}-${dateEnd.getDate () < 10 ? '0' + dateEnd.getDate () : dateEnd.getDate ()}T${dateEnd.getHours () < 10 ? '0' + dateEnd.getHours () : dateEnd.getHours ()}:${dateEnd.getMinutes () < 10 ? '0' + dateEnd.getMinutes () : dateEnd.getMinutes ()}`}">
+          <button onclick='index.setEnd(${data.productList[i].productId})'>設定時間</button>
+          <button onclick='index.cleanEnd(${data.productList[i].productId})'>清除</button>
           </td>
-          <td>${data[i].productName} 
-          <button onclick='index.delproduct(${data[i].productId})'>刪除商品</button>
+          <td>${data.productList[i].productName} 
+          <button onclick='index.delproduct(${data.productList[i].productId})'>刪除商品</button>
           </td>
           <td>
-            <div id='yesList${data[i].productId}' class='yesList'>
-           <button onclick='index.getList(${data[i].productId})'>檢視名單</button>
+            <div id='yesList${data.productList[i].productId}' class='yesList'>
+           <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
             </div>
           </td>
           <td> 
-            <div id='noList${data[i].productId}' class='noList'>
-            <button onclick='index.getList(${data[i].productId})'>檢視名單</button>
+            <div id='noList${data.productList[i].productId}' class='noList'>
+            <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
             </div>
         </td>
         </tr>`;
         } else {
         
           $ ('#indexList')[0].innerHTML += `<tr>
-          <th scope="row" ${data[i].productStar == 0 ? '' : 'style="color: red;"'}>${data[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.checkin(${data[i].productId})'>${data[i].productStatus == null ? '報名' : data[i].productStatus == '1' ? '已報名(本輪)' : '已報名(下一輪)' }</button></th>
+          <th scope="row" ${data.productList[i].productStar == 0 ? '' : 'style="color: red;"'}>${data.productList[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.checkin(${data.productList[i].productId})'>${data.productList[i].productStatus == null ? '報名' : data.productList[i].productStatus == '1' ? '已報名(本輪)' : '已報名(下一輪)' }</button></th>
           <td>${dateEnd.getTime ().toString () == 'NaN' ? '' : `${dateEnd.getFullYear ()}-${(dateEnd.getMonth () + 1) < 10 ? '0' + (dateEnd.getMonth () + 1) : (dateEnd.getMonth () + 1)}-${dateEnd.getDate () < 10 ? '0' + dateEnd.getDate () : dateEnd.getDate ()} ${dateEnd.getHours () < 10 ? '0' + dateEnd.getHours () : dateEnd.getHours ()}:${dateEnd.getMinutes () < 10 ? '0' + dateEnd.getMinutes () : dateEnd.getMinutes ()}`} 
           </td>
-          <td>${data[i].productName}
+          <td>${data.productList[i].productName}
           </td>
 
           <td>
-          <div id='yesList${data[i].productId}' class='yesList'>
-         <button onclick='index.getList(${data[i].productId})'>檢視名單</button>
+          <div id='yesList${data.productList[i].productId}' class='yesList'>
+         <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
           </div>
         </td>
         <td> 
-          <div id='noList${data[i].productId}' class='noList'>
-          <button onclick='index.getList(${data[i].productId})'>檢視名單</button>
+          <div id='noList${data.productList[i].productId}' class='noList'>
+          <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
           </div>
       </td>
         </tr>`;

@@ -5,7 +5,8 @@ var schedule = require (`node-schedule`);
 
 //取得商品列表
 exports.productList = async (req, res) => {
-  let pass = req.body.member == 1 ? true : false;
+  let check = await query (`select level from member where member_id='${req.body.member}'`);
+  let pass = check[0].level == '1' ? true : false;
   let productItem = await query (`SELECT product_end,product.product_id,product_name,product_star,PK_status FROM
   product 
   left join (
@@ -25,11 +26,10 @@ exports.productList = async (req, res) => {
         productName: productItem[i].product_name,
         productStar: productItem[i].product_star, 
         productStatus: productItem[i].PK_status,
-        pass: pass,
       }
     );
   }
-  return productList;
+  return { productList, pass: pass };
 };
 
 //取得名單列表
@@ -154,7 +154,7 @@ exports.starting = async(req, res) => {
 //公告中獎
 exports.showing = async(req, res) => {
   let showList = [];
-  let showItem = await query (`SELECT show_id,member.member_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) where MW_id='${req.body.MW}' order by show_id desc limit 100;`);
+  let showItem = await query (`SELECT show_id,member.member_id,member_name,product_name,date,ans_show.MW_id FROM ans_show left join member using(member_id) left join product using(product_id) where ans_show.MW_id='${req.body.MW}' order by show_id desc limit 100;`);
   for (let i = 0;i < showItem.length;i ++){
     showList.push ({
       memberName: showItem[i].member_name,

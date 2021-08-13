@@ -4,9 +4,9 @@ var manage = this.manage ? () => {throw new Error ();} : {};
 
 $ (() => {
   manage.select = () => {
-    $.post ('/api/productList', {}, (data, status) => {
-      for (let i = 0;i < data.length;i ++){
-        $ ('#productSelect').append (new Option (data[i].productName, data[i].productId, false));
+    $.post ('/api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
+      for (let i = 0;i < data.productList.length;i ++){
+        $ ('#productSelect').append (new Option (data.productList[i].productName, data.productList[i].productId, false));
       }
     });
   };
