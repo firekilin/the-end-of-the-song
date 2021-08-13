@@ -82,5 +82,9 @@ router.post ('/memberDel', async(req, res) => {
   res.send (await member.memberClear (req, res));
 });
 
+//王國列表
+router.post ('/MWList', async(req, res) => {
+  res.send (await member.MWList (req, res));
+});
 
 module.exports = router ;

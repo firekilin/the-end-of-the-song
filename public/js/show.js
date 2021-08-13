@@ -7,7 +7,7 @@ $ (() => {
   //載入獎品公告
   show.loading = () => {
     $ ('#indexList')[0].innerHTML = '';
-    $.post ('/api/showing', { }, (data, status) => {
+    $.post ('/api/showing', { MW: $ ('#MWId').val () }, (data, status) => {
 
       let setdate = new Date ();
       for (let i = 0;i < data.length;i ++){

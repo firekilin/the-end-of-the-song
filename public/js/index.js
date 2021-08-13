@@ -6,7 +6,7 @@ $ (() => {
 
   //載入獎品
   index.loading = () => {
-    $.post ('/api/productList', { member: $ ('#memberId').val () }, (data, status) => {
+    $.post ('/api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
       $ ('#indexList')[0].innerHTML = '';
       if (data[0].pass){
         $ ('#addproduct')[0].hidden = false;
@@ -110,7 +110,11 @@ $ (() => {
 
   //新增獎品
   index.addproduct = () => {
-    $.post ('/api/addProduct', { password: $ ('#password').val (), productName: $ ('#productName').val () }, (data, status) => {
+    $.post ('/api/addProduct', {
+      password: $ ('#password').val (),
+      MW: $ ('#MWId').val (),
+      productName: $ ('#productName').val () 
+    }, (data, status) => {
       alert (data);
       index.loading ();
     } );

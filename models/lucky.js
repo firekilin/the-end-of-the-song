@@ -13,7 +13,7 @@ exports.productList = async (req, res) => {
      FROM end_song.product_check 
      where member_id='${req.body.member}'
  ) as checking 
- on product.product_id=checking.product_id 
+ on product.product_id=checking.product_id where MW_id='${req.body.MW}' 
  order by product_star desc,product_name desc;`);
   let productList = [];
   for (let i = 0;i < productItem.length;i ++){
@@ -86,7 +86,7 @@ exports.checkin = async (req, res) => {
 //新增獎品
 exports.addProduct = async(req, res) => {
   if (req.body.password == '5270' && req.body.productName != ''){
-    let check = await query (`INSERT INTO product (product_name) VALUES ('${req.body.productName}');`);
+    let check = await query (`INSERT INTO product (product_name,MW_id) VALUES ('${req.body.productName}','${req.body.MW}');`);
     if (check){
       return '成功新增';
     }
@@ -123,13 +123,14 @@ exports.delproduct = async(req, res) => {
 //開始抽獎
 exports.starting = async(req, res) => {
   let productItem = req.body.productId;
+  let MWId = req.body.MW;
   let thisTime = new Date ();
   if (productItem != undefined){
     for (let i = (productItem.length - 1);i >= 0 ;i --){
       let memberList = await query (`SELECT PK_id,member_id FROM product_check left join member using(member_id) where  product_id='${productItem[i]}' and PK_status='1' and member_status='0';`);
       if (memberList[0]){
         let getit = Math.floor (Math.random () * memberList.length);
-        await query (`INSERT INTO ans_show (product_id, member_id,date) VALUES ('${productItem[i]}', '${memberList[getit].member_id}','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}'); `);
+        await query (`INSERT INTO ans_show (product_id, member_id,date,MW_id) VALUES ('${productItem[i]}', '${memberList[getit].member_id}','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}','${MWId}'); `);
         await query (`UPDATE product_check SET PK_status = '0' WHERE (PK_id = '${memberList[getit].PK_id}');  `);
       } else {
         let check = await query (`SELECT PK_id FROM product_check where product_id='${productItem[i]}' and PK_status=0;`);
@@ -139,7 +140,7 @@ exports.starting = async(req, res) => {
           }
           i ++;
         } else {
-          await query (`INSERT INTO ans_show (product_id, member_id,date) VALUES ('${productItem[i]}', '5','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}'); `);
+          await query (`INSERT INTO ans_show (product_id, member_id,date,MW_id) VALUES ('${productItem[i]}', '5','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}','${MWId}'); `);
         }
       }
     }
@@ -153,7 +154,7 @@ exports.starting = async(req, res) => {
 //公告中獎
 exports.showing = async(req, res) => {
   let showList = [];
-  let showItem = await query (`SELECT show_id,member.member_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) order by show_id desc limit 100;`);
+  let showItem = await query (`SELECT show_id,member.member_id,member_name,product_name,date FROM ans_show left join member using(member_id) left join product using(product_id) where MW_id='${req.body.MW}' order by show_id desc limit 100;`);
   for (let i = 0;i < showItem.length;i ++){
     showList.push ({
       memberName: showItem[i].member_name,
