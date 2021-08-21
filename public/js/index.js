@@ -18,10 +18,6 @@ $ (() => {
          
           $ ('#indexList')[0].innerHTML += `<tr>
           <th scope="row" ${data.productList[i].productStar == 0 ? '' : 'style="color: red;"'} >${data.productList[i].productStar == 0 ? '未上架' : '上架中'}<button onclick='index.setstar(${data.productList[i].productId})'>☆</button></th>
-          <td><input type="datetime-local" id='productEnd${data.productList[i].productId}' value="${dateEnd.getTime ().toString () == 'NaN' ? '' : `${dateEnd.getFullYear ()}-${(dateEnd.getMonth () + 1) < 10 ? '0' + (dateEnd.getMonth () + 1) : (dateEnd.getMonth () + 1)}-${dateEnd.getDate () < 10 ? '0' + dateEnd.getDate () : dateEnd.getDate ()}T${dateEnd.getHours () < 10 ? '0' + dateEnd.getHours () : dateEnd.getHours ()}:${dateEnd.getMinutes () < 10 ? '0' + dateEnd.getMinutes () : dateEnd.getMinutes ()}`}">
-          <button onclick='index.setEnd(${data.productList[i].productId})'>設定時間</button>
-          <button onclick='index.cleanEnd(${data.productList[i].productId})'>清除</button>
-          </td>
           <td>${data.productList[i].productName} 
           <button onclick='index.delproduct(${data.productList[i].productId})'>刪除商品</button>
           </td>
@@ -35,6 +31,9 @@ $ (() => {
             <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
             </div>
         </td>
+        <td>
+          <button onclick='index.reSet(${data.productList[i].productId})'>清除抽獎名單</button>
+          </td>
         </tr>`;
         } else {
         
@@ -64,22 +63,14 @@ $ (() => {
   };
 
   //設定抽獎時間
-  index.setEnd = (productId) => {
-    $.post ('/api/setEnd', { productId: productId, dateTime: $ (`#productEnd${productId}`).val () }, (data, statue) => {
+  index.reSet = (productId) => {
+    $.post ('/api/reSet', { productId: productId }, (data, statue) => {
       alert (data);
       index.loading ();
     });
   };
-  //清除報名時間
-  index.cleanStart = (productId) => {
-    $ (`#productStart${productId}`).val ('');
-    index.setStart (productId);
-  };
-  //清除抽獎時間
-  index.cleanEnd = (productId) => {
-    $ (`#productEnd${productId}`).val ('');
-    index.setEnd (productId);
-  };
+
+
   //名單
   index.getList = (productId) => {
     $.post ('/api/getList', { productId: productId }, (data, status) => {

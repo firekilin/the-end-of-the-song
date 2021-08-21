@@ -58,8 +58,8 @@ router.post ('/setStart', async(req, res) => {
 });
 
 //設定抽獎時間
-router.post ('/setEnd', async(req, res) => {
-  res.send (await lucky.setEnd (req, res));
+router.post ('/reSet', async(req, res) => {
+  res.send (await lucky.reSet (req, res));
 });
 
 //定時抽獎
@@ -91,9 +91,15 @@ router.post ('/MWList', async(req, res) => {
 router.post ('/getMWPassword', async(req, res) => {
   res.send (await member.MWPassword (req, res));
 });
+
 //修改密碼
 router.post ('/setMWPassword', async(req, res) => {
   res.send (await member.MWChangePassword (req, res));
+});
+
+//重複抽獎功能
+router.post ('/startingRe', async(req, res) => {
+  res.send (await lucky.startingRe (req, res));
 });
 
 module.exports = router ;

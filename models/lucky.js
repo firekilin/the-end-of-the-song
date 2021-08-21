@@ -151,6 +151,28 @@ exports.starting = async(req, res) => {
   return '完成抽獎 請至公告頁面';
 };
 
+//開始重複抽獎功能
+exports.startingRe = async(req, res) => {
+  let productItem = req.body.productId;
+  let MWId = req.body.MW;
+  let thisTime = new Date ();
+  if (productItem != undefined){
+    for (let i = (productItem.length - 1);i >= 0 ;i --){
+      let memberList = await query (`SELECT PK_id,member_id FROM product_check left join member using(member_id) where  product_id='${productItem[i]}'  and member_status='0';`);
+      if (memberList[0]){
+        let getit = Math.floor (Math.random () * memberList.length);
+        await query (`INSERT INTO ans_show (product_id, member_id,date,MW_id) VALUES ('${productItem[i]}', '${memberList[getit].member_id}','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}','${MWId}'); `);
+      } else {
+        await query (`INSERT INTO ans_show (product_id, member_id,date,MW_id) VALUES ('${productItem[i]}', '5','${thisTime.getFullYear ()}-${thisTime.getMonth () + 1}-${thisTime.getDate ()} ${thisTime.getHours ()}:${thisTime.getMinutes ()}:${thisTime.getSeconds ()}','${MWId}'); `);
+      }
+    }
+  } else {
+    return '失敗';
+  }
+  
+  return '完成抽獎 請至公告頁面';
+};
+
 //公告中獎
 exports.showing = async(req, res) => {
   let showList = [];
@@ -167,12 +189,13 @@ exports.showing = async(req, res) => {
 };
 
 
-//設定活動時間
-exports.setEnd = async(req, res) => {
-  let datetime = req.body.dateTime == '' ? 'null' : `'${req.body.dateTime}'`;
-  let check = await query (`UPDATE product SET product_end = ${datetime} WHERE (product_id = '${req.body.productId}');  `);
+//設定重置
+exports.reSet = async(req, res) => {
+  await query (`SET SQL_SAFE_UPDATES=0;`);
+  let check = await query (`DELETE FROM product_check WHERE (PK_id in (select * from (select PK_id from product_check where product_id='${req.body.productId}')as c) );`);
+  await query (`SET SQL_SAFE_UPDATES=1;`);
   if (check){
-    return '成功設定';
+    return '成功清除';
   } else {
     return '失敗';
   }
