@@ -1,7 +1,34 @@
 const db = require ('./getDB');
 const query = db.query;
 
+//註冊新王國
+exports.registerWorld = async(req, res) => {
+  let check = await query (`select MW_name from member_world where MW_name='${req.body.world}'`);
+  if (check[0]){
+    return '已存在此王國';
+  } else {
 
+    if (req.body.name != '' && req.body.password != '' && req.body.world != ''){
+      let check2 = await query (`INSERT INTO member_world (MW_name,MW_password) VALUES ('${req.body.world}','${req.body.password}')`);
+      if (check2){
+        worldId = check2.insertId;
+        let check3 = await query (`INSERT INTO member (member_name, level, MW_id, member_status) VALUES ('${req.body.name}', '1', '${worldId}', '1');`);
+        if (check3){
+          res.cookie ('name', req.body.name);
+          res.cookie ('MW', worldId);
+          return true;
+        } else {
+          return '輸入格式出現錯誤';
+        }
+      } else {
+        return '輸入格式出現錯誤';
+      }
+     
+    } else {
+      return '請輸入完整';
+    }
+  }
+};
 //登入名字
 exports.login = async (req, res) => {
   let check = await query (`select member_name,MW_id from member where member_name='${req.body.name}' and MW_id='${req.body.MW}'`);

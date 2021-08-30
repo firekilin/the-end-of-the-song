@@ -102,4 +102,8 @@ router.post ('/startingRe', async(req, res) => {
   res.send (await lucky.startingRe (req, res));
 });
 
+//註冊王國
+router.post ('/registerWorld', async(req, res) => {
+  res.send (await member.registerWorld (req, res));
+});
 module.exports = router ;

@@ -9,27 +9,23 @@
   <link href="/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
    <!--index.js-->
-   <script src="/public/js/login.js" defer="defer"></script>
+   <script src="/public/js/registerWorld.js" defer="defer"></script>
    <link href="/public/css/index.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="container">
       <p>
-        王國：<select id='MWSelect'></select>
+        王國名稱：<input id='world' type="text">
       </p>
       <p>
-        玩家名稱：<input id='name' type="text">
-        <button onclick="login.login()">登入及註冊</button>
+        管理員名稱：<input id='name' type="text">
+     
       </p>
       <p>
-        王國密碼：<input id='password' type="text"> (未註冊者)       
+        王國密碼：<input id='password' type="text">    
       </p>
-      <p>----------------------</p>
-      <p>
-        <button onClick="location.href='./registerWorld'">註冊新王國</button>
-
-      </p>
+      <button onclick="register.register()">註冊</button>
     </div>
 </body>
 

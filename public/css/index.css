@@ -1,0 +1,22 @@
+button {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.container {
+    margin-top: 50px;
+}
+.setproduct {
+    margin-bottom: 20px;
+    margin-top:20px;
+}
+#sendtotal {
+    border: #a222b5 solid;
+    padding: 10px;
+}
+
+#sendtotal > p {
+    padding: 20px;
+    margin-bottom: 10px;
+    border: black solid;
+}

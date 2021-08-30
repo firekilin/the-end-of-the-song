@@ -78,4 +78,7 @@ router.get ('/manageMember', async(req, res) => {
   }
 });
 
+router.get ('/registerWorld', async(req, res) => {
+  res.render ('registerWorld');
+});
 module.exports = router;
