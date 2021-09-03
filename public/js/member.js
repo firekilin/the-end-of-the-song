@@ -39,11 +39,18 @@ $ (() => {
       $ ('#MWpassword').val (data.password);
     });
   };
+  
   //修改密碼
   member.setPassword = () => {
     $.post ('/api/setMWPassword', { MWPassword: $ ('#MWpassword').val (), MW: $ ('#MWId').val () }, (data, status) => {
       alert (data);
       member.getPassword ();
+    });
+  };
+  member.addMember = () => {
+    $.post ('./api/addMember', { memberName: $ ('#memberName').val (), MW: $ ('#MWId').val () }, (data, status) => {
+      alert (data);
+      member.loading ();
     });
   };
 

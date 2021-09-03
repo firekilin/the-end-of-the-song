@@ -106,4 +106,29 @@ router.post ('/startingRe', async(req, res) => {
 router.post ('/registerWorld', async(req, res) => {
   res.send (await member.registerWorld (req, res));
 });
+
+//新增會員
+router.post ('/addMember', async(req, res) => {
+  res.send (await member.addMember (req, res));
+});
+
+//取消報名
+router.post ('/deleteMember', async(req, res) => {
+  res.send (await lucky.deleteMember (req, res));
+});
+
+//列出未報名列表
+router.post ('/getcheckin', async(req, res) => {
+  res.send (await lucky.getCheckin (req, res));
+});
+
+//管理員報名
+router.post ('/checkin2', async(req, res) => {
+  res.send (await lucky.checkin2 (req, res));
+});
+
+//列出抽獎名單
+router.post ('/showjoin', async(req, res) => {
+  res.send (await lucky.showjoin (req, res));
+});
 module.exports = router ;

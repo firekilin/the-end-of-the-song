@@ -119,7 +119,7 @@ exports.logout = async(req, res) => {
 //列出會員清單
 exports.memberList = async(req, res) => {
   let memberBox = [];
-  let memberItem = await query (`SELECT member_id,member_name,member_status FROM end_song.member where MW_id='${req.body.MWId}'`);
+  let memberItem = await query (`SELECT member_id,member_name,member_status FROM end_song.member where MW_id='${req.body.MWId}' order by member_id desc`);
   for (let i = 0;i < memberItem.length;i ++){
     memberBox.push ({ 
       memberId: memberItem[i].member_id,
@@ -191,6 +191,16 @@ exports.MWChangePassword = async(req, res) => {
     } else {
       return '失敗';
     }
+  } catch (e){
+    return '失敗';
+  }
+};
+
+//新增會員
+exports.addMember = async(req, res) => {
+  try {
+    let check = await query (`INSERT INTO member (member_name,MW_id) VALUES('${req.body.memberName}','${req.body.MW}');`);
+    return '成功新增';
   } catch (e){
     return '失敗';
   }

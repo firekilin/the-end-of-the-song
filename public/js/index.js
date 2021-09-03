@@ -70,6 +70,15 @@ $ (() => {
     });
   };
 
+  //取得未報名清單
+  index.getcheckin = (productId) => {
+    $.post ('/api/getcheckin', { productId: productId }, (data, status) => {
+      for (let i = 0;i < data.length;i ++){
+        $ (`#yesSelect${productId}`).append (new Option (data[i].memberName, data[i].memberId, false));
+        $ (`#noSelect${productId}`).append (new Option (data[i].memberName, data[i].memberId, false));
+      }
+    });
+  };
 
   //名單
   index.getList = (productId) => {
@@ -77,16 +86,23 @@ $ (() => {
       let yesList = '';
       let noList = '';
       for (let j = 0;j < data.yesList.length;j ++){
-        yesList += `<p>${data.yesList[j].name}</p>`;
+        yesList += `<p>${data.yesList[j].name} <button onclick="index.deleteMember('${data.yesList[j].PKId}','${productId}')">X</button></p>`;
       }
       for (let j = 0;j < data.noList.length;j ++){
-        noList += `<p>${data.noList[j].name}</p>`;
+        noList += `<p>${data.noList[j].name} <button onclick="index.deleteMember('${data.noList[j].PKId}','${productId}')">X</button></p>`;
       }
+      yesList += `<select id='yesSelect${productId}'></select><button onclick="index.checkin2('0','${productId}')">新增</button>`;
+      noList += `<select id='noSelect${productId}'></select><button onclick="index.checkin2('1','${productId}')">新增</button>`;
+      index.getcheckin (productId);
       $ (`#yesList${productId}`)[0].innerHTML = yesList;
       $ (`#noList${productId}`)[0].innerHTML = noList;
     });
-    
   };
+
+  var runwait = new Promise ( (resolve, reject) => {
+    index.loading ();
+    resolve ('Success!');
+  } );
 
   //報名
   index.checkin = (productId) => {
@@ -94,11 +110,51 @@ $ (() => {
       if (data == '失敗'){
         alert (data);
       }
-      index.getList (productId);
-      index.loading ();
+      runwait.then ((data) => {index.getList (productId);console.log (data);});
     } );
   };
+  
 
+  //管理員報名
+  index.checkin2 = (check, productId) => {
+    if (check == 0){
+      $.post ('/api/checkin2', {
+        productId: productId,
+        memberId: $ (`#yesSelect${productId}`).val (),
+        statusCheck: 0 
+      }, (data, status) => {
+        if (data == '失敗'){
+          alert (data);
+        }
+        runwait.then ((data) => {index.getList (productId);console.log (data);});
+      } );
+    } else {
+      $.post ('/api/checkin2', {
+        productId: productId,
+        memberId: $ (`#noSelect${productId}`).val (),
+        statusCheck: 1 
+      }, (data, status) => {
+        if (data == '失敗'){
+          alert (data);
+        }
+        runwait.then ((data) => {index.getList (productId);console.log (data);});
+      } );
+    }
+    
+  };
+
+  //管理員刪除報名
+  index.deleteMember = (PKId, productId) => {
+    $.post ('/api/deleteMember', { PKId: PKId }, (data, status) => {
+      if (data == '失敗'){
+        alert (data);
+      }
+      runwait.then ((data) => {index.getList (productId);console.log (data);});
+
+      
+    });
+  };
+ 
   //新增獎品
   index.addproduct = () => {
     $.post ('/api/addProduct', {

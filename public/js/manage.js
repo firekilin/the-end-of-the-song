@@ -37,13 +37,16 @@ $ (() => {
     $ ('#sendtotal')[0].innerHTML = '';
   };
 
-  manage.setDateStart = () => {
+  manage.setDateStart = (re) => {
     let productId = [];
     for (let i = 0;i < $ ('.product').length;i ++){
       productId.push ($ ('.product')[i].value);
     }
-    $.post ('/api/setDatestart', {
-      productId: productId, setDate: $ (`#setDate`).val (), MW: $ ('#MWId').val () 
+    $.post ('/api/setDatestart', { 
+      re: re,
+      productId: productId,
+      setDate: $ (`#setDate`).val (),
+      MW: $ ('#MWId').val () 
     }, (data, status) => {
       alert (data);
     });
