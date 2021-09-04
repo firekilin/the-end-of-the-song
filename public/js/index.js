@@ -23,12 +23,12 @@ $ (() => {
           </td>
           <td>
             <div id='yesList${data.productList[i].productId}' class='yesList'>
-           <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
+           <button onclick='index.getList(${data.productList[i].productId},${data.pass})'>檢視名單</button>
             </div>
           </td>
           <td> 
             <div id='noList${data.productList[i].productId}' class='noList'>
-            <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
+            <button onclick='index.getList(${data.productList[i].productId},${data.pass})'>檢視名單</button>
             </div>
         </td>
         <td>
@@ -81,22 +81,28 @@ $ (() => {
   };
 
   //名單
-  index.getList = (productId) => {
-    $.post ('/api/getList', { productId: productId }, (data, status) => {
-      let yesList = '';
-      let noList = '';
-      for (let j = 0;j < data.yesList.length;j ++){
-        yesList += `<p>${data.yesList[j].name} <button onclick="index.deleteMember('${data.yesList[j].PKId}','${productId}')">X</button></p>`;
-      }
-      for (let j = 0;j < data.noList.length;j ++){
-        noList += `<p>${data.noList[j].name} <button onclick="index.deleteMember('${data.noList[j].PKId}','${productId}')">X</button></p>`;
-      }
-      yesList += `<select id='yesSelect${productId}'></select><button onclick="index.checkin2('0','${productId}')">新增</button>`;
-      noList += `<select id='noSelect${productId}'></select><button onclick="index.checkin2('1','${productId}')">新增</button>`;
-      index.getcheckin (productId);
-      $ (`#yesList${productId}`)[0].innerHTML = yesList;
-      $ (`#noList${productId}`)[0].innerHTML = noList;
-    });
+  index.getList = (productId,pass) => {
+
+      $.post ('/api/getList', { productId: productId }, (data, status) => {
+        let yesList = '';
+        let noList = '';
+        for (let j = 0;j < data.yesList.length;j ++){
+          yesList += `<p>${data.yesList[j].name} <button onclick="index.deleteMember('${data.yesList[j].PKId}','${productId}')">X</button></p>`;
+        }
+        for (let j = 0;j < data.noList.length;j ++){
+          noList += `<p>${data.noList[j].name} <button onclick="index.deleteMember('${data.noList[j].PKId}','${productId}')">X</button></p>`;
+        }
+        if(pass){
+        yesList += `<select id='yesSelect${productId}'></select><button onclick="index.checkin2('0','${productId}')">新增</button>`;
+        noList += `<select id='noSelect${productId}'></select><button onclick="index.checkin2('1','${productId}')">新增</button>`;
+        index.getcheckin (productId);
+
+       }
+       $ (`#yesList${productId}`)[0].innerHTML = yesList;
+       $ (`#noList${productId}`)[0].innerHTML = noList;
+      });
+
+   
   };
 
   var runwait = new Promise ( (resolve, reject) => {
