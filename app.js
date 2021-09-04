@@ -13,7 +13,7 @@ var schedule = require ('node-schedule');
 app.listen (port, () => {
   console.log ('listen on port:' + port);
 });
-
+app.use ('/linebot', linebot);//LINEbot
 app.use (cookieParser (credentials.cookieSecret));
 app.set ('views', './views');
 app.set ('view engine', 'ejs');
@@ -21,5 +21,5 @@ app.use ('/', main); //頁面用
 app.use ('/api', api); //api
 app.use ('/plugins', plugins); //使用套件
 app.use ('/public', express.static ('./public'));
-app.use ('/linebot', linebot);//LINEbot
+
 
