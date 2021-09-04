@@ -12,11 +12,18 @@ var credentials = require ('./models/credential.js');
 var cookieParser = require ('cookie-parser');
 
 
-
+/*
 
 app.listen (port, () => {
   console.log ('listen on port:' + port);
 });
+*/
+
+var http = require('http');
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(80);
 
 https.createServer({
     key:fs.readFileSync('./ssl/privkey.pem'),
@@ -27,6 +34,7 @@ https.createServer({
   console.log('443 open')
 });
 
+app.use ('/linebot', linebot);//LINEbot
 app.use (cookieParser (credentials.cookieSecret));
 app.set ('views', './views');
 app.set ('view engine', 'ejs');
@@ -35,4 +43,6 @@ app.use ('/api', api); //api
 app.use ('/plugins', plugins); //使用套件
 app.use ('/public', express.static ('./public'));
 app.use('/.well-known',express.static('./.well-known'));
-app.use ('/linebot', linebot);//LINEbot
+app.use(function(req, res){
+  res.status(404).send("查無此頁,<a href='https://kilincat.servegame.com/index'>點此回首頁</a>");
+});

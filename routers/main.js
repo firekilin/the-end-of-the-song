@@ -2,6 +2,20 @@ const router = require ('express').Router ();
 const member = require ('../models/member');
 
 //首頁
+router.get ('/', async(req, res) => {
+  let level = await member.login2 (req, res);
+  if (level.pass){
+    res.render ('index', {
+      MWId: level.MWId,
+      memberId: level.memberId,
+      password: level.password 
+    });
+  } else {
+    res.redirect ('login');
+  }
+});
+
+//首頁
 router.get ('/index', async(req, res) => {
   let level = await member.login2 (req, res);
   if (level.pass){

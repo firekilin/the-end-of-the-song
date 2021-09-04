@@ -1,25 +1,15 @@
 const router = require ('express').Router ();
 const config = require ('config');
-const acctoken = config.get ('linebot.channelAccessToken');
-const secret = config.get ('linebot.channeSecret');
+const acctoken = config.get ('lineBot.channelAccessToken');
+const secret = config.get ('lineBot.channelSecret');
 const line = require ('@line/bot-sdk');
+const linebot = require ('../models/lineBot');
 
 
 // 設定callback為api
 router.post ('/callback', line.middleware ({ channelAccessToken: acctoken,
-  channelSecret: secret, }), (req, res) => {
-  const event = req.body.events[0];
-  
-  if (event.type === 'message') {
-    const message = event.message;
-  
-    if (message.type === 'text' && message.text === 'hello') {
-      client.replyMessage (event.replyToken, { type: 'text',
-        text: 'hello world1', });
-      client.replyMessage (event.replyToken, { type: 'text',
-        text: 'hello world2', });
-    }
-  }
+  channelSecret: secret, }), async (req, res) => {
+
   Promise
     .all (req.body.events.map (handleEvent))
     .then ((result) => {return res.json (result);})
@@ -28,3 +18,18 @@ router.post ('/callback', line.middleware ({ channelAccessToken: acctoken,
       res.status (500).end ();
     });
 });
+
+// 控制處理
+handleEvent = async (event) => {
+  if (event.type !== 'message' || event.message.type !== 'text') {
+    return Promise.resolve (null);
+  }
+  console.log (event.message);
+  // create a echoing text message
+  const echo = { type: 'text', text: '成功收到' };
+  
+  // use reply API
+  return client.replyMessage (event.replyToken, echo);
+};
+
+module.exports = router;
