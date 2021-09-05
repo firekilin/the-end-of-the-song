@@ -66,7 +66,9 @@ exports.getCheckin = async (req, res) => {
   where level='0' 
   and product.MW_id=member.MW_id 
   and product_id='${productId}' 
-  and member_id not in (select member_id from product_check);`);
+  and member_id not in (select member_id from product_check where product_id='${productId}');`);
+
+
   for (let i = 0;i < memberList.length;i ++){
     postList.push ({ memberId: memberList[i].member_id, memberName: memberList[i].member_name });
   }
