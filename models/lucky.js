@@ -115,6 +115,24 @@ exports.checkin2 = async (req, res) => {
   }
 };
 
+//管理員登記報名
+exports.checkin3 = async (req, res) => {
+  let productId = req.body.productId;
+
+  let check3 = await query (`INSERT INTO product_check (product_id, member_id, PK_status) (SELECT product_id,member_id,'${req.body.statusCheck}' as PK_status
+  FROM member,product 
+  where level='0' 
+  and product.MW_id=member.MW_id 
+  and product_id='${productId }' 
+  and member_id not in (select member_id from product_check where product_id='${productId }'));`);
+  if (check3){
+    return '已完成報名';
+  } else {
+    return '失敗';
+  }
+};
+
+
 //取消報名
 exports.deleteMember = async(req, res) => {
   let PKId = req.body.PKId;

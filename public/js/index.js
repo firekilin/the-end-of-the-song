@@ -62,7 +62,7 @@ $ (() => {
     });
   };
   
-  index.allreload=(productId,pass)=>{
+  index.allreload = (productId, pass) => {
     $.post ('/api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
       $ ('#indexList')[0].innerHTML = '';
       if (data.pass){
@@ -118,38 +118,36 @@ $ (() => {
       $.post ('/api/getList', { productId: productId }, (data, status) => {
         let yesList = '';
         let noList = '';
-        if(pass){
-        for (let j = 0;j < data.yesList.length;j ++){
-          yesList += `<p>${data.yesList[j].name} <button onclick="index.deleteMember('${data.yesList[j].PKId}','${productId}')">X</button></p>`;
+        if (pass){
+          yesList += `<select id='yesSelect${productId}'></select><button onclick="index.checkin2('0','${productId}')">新增</button><button onclick="index.checkin3('0','${productId}')">全加</button>`;
+          noList += `<select id='noSelect${productId}'></select><button onclick="index.checkin2('1','${productId}')">新增</button><button onclick="index.checkin3('1','${productId}')">全加</button>`;
+          index.getcheckin (productId);
+          for (let j = 0;j < data.yesList.length;j ++){
+            yesList += `<p>${data.yesList[j].name} <button onclick="index.deleteMember('${data.yesList[j].PKId}','${productId}')">X</button></p>`;
+          }
+          for (let j = 0;j < data.noList.length;j ++){
+            noList += `<p>${data.noList[j].name} <button onclick="index.deleteMember('${data.noList[j].PKId}','${productId}')">X</button></p>`;
+          }
+        } else {
+          for (let j = 0;j < data.yesList.length;j ++){
+            yesList += `<p>${data.yesList[j].name}</p>`;
+          }
+          for (let j = 0;j < data.noList.length;j ++){
+            noList += `<p>${data.noList[j].name} </p>`;
+          }
         }
-        for (let j = 0;j < data.noList.length;j ++){
-          noList += `<p>${data.noList[j].name} <button onclick="index.deleteMember('${data.noList[j].PKId}','${productId}')">X</button></p>`;
-        }
-      
-        yesList += `<select id='yesSelect${productId}'></select><button onclick="index.checkin2('0','${productId}')">新增</button>`;
-        noList += `<select id='noSelect${productId}'></select><button onclick="index.checkin2('1','${productId}')">新增</button>`;
-        index.getcheckin (productId);
-
-       }else{
-        for (let j = 0;j < data.yesList.length;j ++){
-          yesList += `<p>${data.yesList[j].name}</p>`;
-        }
-        for (let j = 0;j < data.noList.length;j ++){
-          noList += `<p>${data.noList[j].name} </p>`;
-        }
-       }
-       $ (`#yesList${productId}`)[0].innerHTML = yesList;
-       $ (`#noList${productId}`)[0].innerHTML = noList;
+        $ (`#yesList${productId}`)[0].innerHTML = yesList;
+        $ (`#noList${productId}`)[0].innerHTML = noList;
       });
     
     });
-  }
+  };
 
   //reset
   index.reSet = (productId) => {
     $.post ('/api/reSet', { productId: productId }, (data, statue) => {
       alert (data);
-      index.allreload(productId,true);
+      index.allreload (productId, true);
     });
   };
 
@@ -164,34 +162,33 @@ $ (() => {
   };
 
   //名單
-  index.getList = (productId,pass) => {
+  index.getList = (productId, pass) => {
 
-      $.post ('/api/getList', { productId: productId }, (data, status) => {
-        let yesList = '';
-        let noList = '';
-        if(pass){
+    $.post ('/api/getList', { productId: productId }, (data, status) => {
+      let yesList = '';
+      let noList = '';
+      if (pass){
+        yesList += `<select id='yesSelect${productId}'></select><button onclick="index.checkin2('0','${productId}')">新增</button><button onclick="index.checkin3('0','${productId}')">全加</button>`;
+        noList += `<select id='noSelect${productId}'></select><button onclick="index.checkin2('1','${productId}')">新增</button><button onclick="index.checkin3('1','${productId}')">全加</button>`;
+        index.getcheckin (productId);
+
         for (let j = 0;j < data.yesList.length;j ++){
           yesList += `<p>${data.yesList[j].name} <button onclick="index.deleteMember('${data.yesList[j].PKId}','${productId}')">X</button></p>`;
         }
         for (let j = 0;j < data.noList.length;j ++){
           noList += `<p>${data.noList[j].name} <button onclick="index.deleteMember('${data.noList[j].PKId}','${productId}')">X</button></p>`;
         }
-      
-        yesList += `<select id='yesSelect${productId}'></select><button onclick="index.checkin2('0','${productId}')">新增</button>`;
-        noList += `<select id='noSelect${productId}'></select><button onclick="index.checkin2('1','${productId}')">新增</button>`;
-        index.getcheckin (productId);
-
-       }else{
+      } else {
         for (let j = 0;j < data.yesList.length;j ++){
           yesList += `<p>${data.yesList[j].name}</p>`;
         }
         for (let j = 0;j < data.noList.length;j ++){
           noList += `<p>${data.noList[j].name} </p>`;
         }
-       }
-       $ (`#yesList${productId}`)[0].innerHTML = yesList;
-       $ (`#noList${productId}`)[0].innerHTML = noList;
-      });
+      }
+      $ (`#yesList${productId}`)[0].innerHTML = yesList;
+      $ (`#noList${productId}`)[0].innerHTML = noList;
+    });
 
    
   };
@@ -203,7 +200,7 @@ $ (() => {
       if (data == '失敗'){
         alert (data);
       }
-      index.allreload(productId);
+      index.allreload (productId);
     } );
   };
   
@@ -219,7 +216,7 @@ $ (() => {
         if (data == '失敗'){
           alert (data);
         }
-        index.allreload(productId,true);
+        index.allreload (productId, true);
       } );
     } else {
       $.post ('/api/checkin2', {
@@ -230,10 +227,31 @@ $ (() => {
         if (data == '失敗'){
           alert (data);
         }
-        index.allreload(productId,true);
+        index.allreload (productId, true);
       } );
     }
     
+  };
+
+  //新增所有玩家進名單
+  index.checkin3 = (check, productId) => {
+    if (check == 0){
+      $.post ('/api/checkin3', { productId: productId,
+        statusCheck: 0 }, (data, status) => {
+        if (data == '失敗'){
+          alert (data);
+        }
+        index.allreload (productId, true);
+      } );
+    } else {
+      $.post ('/api/checkin3', { productId: productId,
+        statusCheck: 1 }, (data, status) => {
+        if (data == '失敗'){
+          alert (data);
+        }
+        index.allreload (productId, true);
+      } );
+    }
   };
 
   //管理員刪除報名
@@ -242,7 +260,7 @@ $ (() => {
       if (data == '失敗'){
         alert (data);
       }
-      index.allreload(productId,true);
+      index.allreload (productId, true);
 
       
     });
