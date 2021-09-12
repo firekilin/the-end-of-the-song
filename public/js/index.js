@@ -22,12 +22,12 @@ $ (() => {
           <button onclick='index.delproduct(${data.productList[i].productId})'>刪除商品</button>
           </td>
           <td>
-            <div id='yesList${data.productList[i].productId}' class='yesList'>
+            <div id='yesList${data.productList[i].productId}' class='yesLists'>
            <button onclick='index.getList(${data.productList[i].productId},${data.pass})'>檢視名單</button>
             </div>
           </td>
           <td> 
-            <div id='noList${data.productList[i].productId}' class='noList'>
+            <div id='noList${data.productList[i].productId}' class='noLists'>
             <button onclick='index.getList(${data.productList[i].productId},${data.pass})'>檢視名單</button>
             </div>
         </td>
@@ -79,12 +79,12 @@ $ (() => {
           <button onclick='index.delproduct(${data.productList[i].productId})'>刪除商品</button>
           </td>
           <td>
-            <div id='yesList${data.productList[i].productId}' class='yesList'>
+            <div id='yesList${data.productList[i].productId}' class='yesLists'>
            <button onclick='index.getList(${data.productList[i].productId},${data.pass})'>檢視名單</button>
             </div>
           </td>
           <td> 
-            <div id='noList${data.productList[i].productId}' class='noList'>
+            <div id='noList${data.productList[i].productId}' class='noLists'>
             <button onclick='index.getList(${data.productList[i].productId},${data.pass})'>檢視名單</button>
             </div>
         </td>
@@ -102,12 +102,12 @@ $ (() => {
           </td>
 
           <td>
-          <div id='yesList${data.productList[i].productId}' class='yesList'>
+          <div id='yesList${data.productList[i].productId}' class='yesLists'>
          <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
           </div>
         </td>
         <td> 
-          <div id='noList${data.productList[i].productId}' class='noList'>
+          <div id='noList${data.productList[i].productId}' class='noLists'>
           <button onclick='index.getList(${data.productList[i].productId})'>檢視名單</button>
           </div>
       </td>
@@ -136,6 +136,8 @@ $ (() => {
             noList += `<p>${data.noList[j].name} </p>`;
           }
         }
+        $ (`#yesList${productId}`).attr ('class', 'yesList');
+        $ (`#noList${productId}`).attr ('class', 'noList');
         $ (`#yesList${productId}`)[0].innerHTML = yesList;
         $ (`#noList${productId}`)[0].innerHTML = noList;
       });
@@ -186,6 +188,8 @@ $ (() => {
           noList += `<p>${data.noList[j].name} </p>`;
         }
       }
+      $ (`#yesList${productId}`).attr ('class', 'yesList');
+      $ (`#noList${productId}`).attr ('class', 'noList');
       $ (`#yesList${productId}`)[0].innerHTML = yesList;
       $ (`#noList${productId}`)[0].innerHTML = noList;
     });
@@ -261,8 +265,6 @@ $ (() => {
         alert (data);
       }
       index.allreload (productId, true);
-
-      
     });
   };
  
@@ -292,9 +294,7 @@ $ (() => {
       alert (data);
       index.loading ();
     });
-
   };
-
   index.loading ();
 });
 

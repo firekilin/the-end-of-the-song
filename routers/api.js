@@ -126,6 +126,7 @@ router.post ('/getcheckin', async(req, res) => {
 router.post ('/checkin2', async(req, res) => {
   res.send (await lucky.checkin2 (req, res));
 });
+
 //管理員報名全
 router.post ('/checkin3', async(req, res) => {
   res.send (await lucky.checkin3 (req, res));
