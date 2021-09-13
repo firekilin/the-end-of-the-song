@@ -11,7 +11,8 @@ $ (() => {
         <td>${data[i].memberName}</td>
         <td  ${data[i].memberStatus == '1' ? 'style="color:red"' : ''}>${data[i].memberStatus == '0' ? '是' : '否'}
         <button onclick='member.change(${data[i].memberId})'>切換</button>
-        <button onclick='member.delplayer(${data[i].memberId})'>清除玩家報名(嚴重)</button>
+        <button onclick='member.delplayer(${data[i].memberId})'>清除玩家所有報名</button>
+        <button onclick='member.deleteplayer(${data[i].memberId})'>刪除玩家</btton>
         </td>
         </tr>`;
       }
@@ -28,6 +29,13 @@ $ (() => {
   //清除玩家報名
   member.delplayer = (memberId) => {
     $.post ('/api/memberDel', { memberId: memberId }, (data, status) => {
+      alert (data);
+      member.loading ();
+    });
+  };
+  //清除玩家報名
+  member.deleteplayer = (memberId) => {
+    $.post ('/api/memberDelete', { memberId: memberId }, (data, status) => {
       alert (data);
       member.loading ();
     });

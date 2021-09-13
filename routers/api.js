@@ -82,6 +82,11 @@ router.post ('/memberDel', async(req, res) => {
   res.send (await member.memberClear (req, res));
 });
 
+//刪除玩家
+router.post ('/memberDelete', async(req, res) => {
+  res.send (await member.memberDelete (req, res));
+});
+
 //王國列表
 router.post ('/MWList', async(req, res) => {
   res.send (await member.MWList (req, res));
@@ -131,4 +136,6 @@ router.post ('/checkin2', async(req, res) => {
 router.post ('/showjoin', async(req, res) => {
   res.send (await lucky.showjoin (req, res));
 });
+
+
 module.exports = router ;

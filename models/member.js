@@ -157,6 +157,26 @@ exports.memberClear = async(req, res) => {
   }
 };
 
+//清除報名紀錄
+exports.memberDelete = async(req, res) => {
+  try {
+    await query (`SET SQL_SAFE_UPDATES=0;`);
+    let check = await query (`DELETE FROM product_check WHERE (PK_id in (select * from (select PK_id from product_check where member_id='${req.body.memberId}')as c) );`);
+    let check2 = await query (`DELETE FROM member where member_id='${req.body.memberId}';`);
+    await query (`SET SQL_SAFE_UPDATES=1;`);
+    if (check){
+      return `成功取消${check.affectedRows}筆報名,並永久刪除玩家`;
+    } else {
+      return `錯誤`;
+    }
+  
+  } catch (e){
+    return '失敗';
+  }
+};
+
+
+
 
 //王國列表
 exports.MWList = async(req, res) => {
