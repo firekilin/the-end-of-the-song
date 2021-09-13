@@ -132,6 +132,12 @@ router.post ('/checkin2', async(req, res) => {
   res.send (await lucky.checkin2 (req, res));
 });
 
+//管理員報名全
+router.post ('/checkin3', async(req, res) => {
+  res.send (await lucky.checkin3 (req, res));
+});
+
+
 //列出抽獎名單
 router.post ('/showjoin', async(req, res) => {
   res.send (await lucky.showjoin (req, res));

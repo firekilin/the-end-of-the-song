@@ -13,17 +13,17 @@ $ (() => {
       for (let i = 0;i < data.length;i ++){
         let j = i;
         let rowspanCount = 0;
-        while (data[i].productName == data[j].productName && new Date (data[i].date).getTime () == new Date (data[j].date).getTime ()){
+        while (j < data.length && data[i].productName == data[j].productName && new Date (data[i].date).getTime () == new Date (data[j].date).getTime ()){
           j ++;
           rowspanCount += 1;
         }
 
-        let detailBtn = `<td id="showingtd${data[i].showId}" class="table-info" rowspan="${rowspanCount}" id='showdetail${data[i].showId}'><button onclick='show.open(${data[i].showId})'>顯示名單</button></td>`;
+        let detailBtn = `<td id="showingtd${data[i + rowspanCount - 1].showId}" class="table-info" rowspan="${rowspanCount}" id='showdetail${data[i + rowspanCount - 1].showId}'><button onclick='show.open(${data[i + rowspanCount - 1].showId})'>顯示名單</button></td>`;
         if (i > 0){
           if (data[i].productName == data[i - 1].productName && new Date (data[i].date).getTime () == new Date (data[i - 1].date).getTime ()){
             detailBtn = '';
           } else {
-            detailBtn = `<td id="showingtd${data[i].showId}" class="table-info" rowspan="${rowspanCount}" id='showdetail${data[i].showId}'><button onclick='show.open(${data[i].showId})'>顯示名單</button></td>`;
+            detailBtn = `<td id="showingtd${data[i + rowspanCount - 1].showId}" class="table-info" rowspan="${rowspanCount}" id='showdetail${data[i + rowspanCount - 1].showId}'><button onclick='show.open(${data[i + rowspanCount - 1].showId})'>顯示名單</button></td>`;
           }
         }
 
