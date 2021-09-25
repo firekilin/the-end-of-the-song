@@ -108,6 +108,8 @@ function registerButtonHandlers() {
       external: true });
   });
 
+
+
   // closeWindow call
   document.getElementById ('closeWindowButton').addEventListener ('click', function() {
     if (! liff.isInClient ()) {
@@ -130,6 +132,7 @@ function registerButtonHandlers() {
       });
     }
   });
+  
 
   // get access token
   document.getElementById ('getAccessToken').addEventListener ('click', function() {
