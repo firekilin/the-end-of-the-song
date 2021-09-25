@@ -108,8 +108,6 @@ function registerButtonHandlers() {
       external: true });
   });
 
-
-
   // closeWindow call
   document.getElementById ('closeWindowButton').addEventListener ('click', function() {
     if (! liff.isInClient ()) {
@@ -124,20 +122,14 @@ function registerButtonHandlers() {
     if (! liff.isInClient ()) {
       sendAlertIfNotInClient ();
     } else {
-      let getUrlString = location.href;
-      let url = new URL (getUrlString);
-      let gettext = url.searchParams.get ('text'); // 回傳 21
       liff.sendMessages ([{ 'type': 'text',
-        'text': gettext }]).then (function() {
+        'text': 'You\'ve successfully sent a message! Hooray!' }]).then (function() {
         window.alert ('Message sent');
-        liff.closeWindow ();
       }).catch (function(error) {
         window.alert ('Error sending message: ' + error);
       });
     }
-
   });
-  
 
   // get access token
   document.getElementById ('getAccessToken').addEventListener ('click', function() {
