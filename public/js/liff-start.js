@@ -1,7 +1,9 @@
 window.onload = function() {
   const useNodeJS = true; // if you are not using a node server, set this value to false
   const defaultLiffId = ''; // change the default LIFF value if you are not using a node server
-
+  let getUrlString = location.href;
+  let url = new URL (getUrlString);
+  let gettext = url.searchParams.get ('text'); // 回傳 21
   // DO NOT CHANGE THIS
   let myLiffId = '';
 
@@ -125,12 +127,14 @@ function registerButtonHandlers() {
       sendAlertIfNotInClient ();
     } else {
       liff.sendMessages ([{ 'type': 'text',
-        'text': 'You\'ve successfully sent a message! Hooray!' }]).then (function() {
+        'text': gettext }]).then (function() {
         window.alert ('Message sent');
+        liff.closeWindow ();
       }).catch (function(error) {
         window.alert ('Error sending message: ' + error);
       });
     }
+
   });
   
 

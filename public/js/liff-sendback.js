@@ -1,6 +1,6 @@
 let getUrlString = location.href;
 let url = new URL (getUrlString);
-let gettext = url.searchParams.get ('id'); // 回傳 21
+let gettext = url.searchParams.get ('text'); // 回傳 21
 
 if (! liff.isInClient ()) {
   sendAlertIfNotInClient ();
