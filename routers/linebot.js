@@ -2,6 +2,7 @@ const router = require ('express').Router ();
 const config = require ('config');
 const acctoken = config.get ('lineBot.channelAccessToken');
 const secret = config.get ('lineBot.channelSecret');
+const liffId = config.get ('lineBot.liffId');
 const line = require ('@line/bot-sdk');
 const linebot = require ('../models/lineBot');
 
@@ -31,5 +32,15 @@ handleEvent = async (event) => {
   // use reply API
   return client.replyMessage (event.replyToken, echo);
 };
+
+
+router.get ('/liff', async(req, res) => {
+  res.render ('liff');
+});
+
+router.get ('/send-id', async(req, res) => {
+  res.json ({ id: liffId });
+});
+
 
 module.exports = router;
