@@ -63,13 +63,26 @@ function initializeApp() {
   displayLiffData ();
   displayIsInClientInfo ();
   registerButtonHandlers ();
-
+  tomessage ();
   // check if the user is logged in/out, and disable inappropriate button
   if (liff.isLoggedIn ()) {
     document.getElementById ('liffLoginButton').disabled = true;
   } else {
     document.getElementById ('liffLogoutButton').disabled = true;
   }
+}
+
+function tomessage(){
+  let getUrlString = location.href;
+  let url = new URL (getUrlString);
+  let gettext = url.searchParams.get ('text'); // 回傳 21
+  liff.sendMessages ([{ 'type': 'text',
+    'text': gettext }]).then (function() {
+    window.alert ('Message sent');
+    liff.closeWindow ();
+  }).catch (function(error) {
+    window.alert ('Error sending message: ' + error);
+  });
 }
 
 /**
