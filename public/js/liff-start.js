@@ -76,13 +76,15 @@ function tomessage(){
   let getUrlString = location.href;
   let url = new URL (getUrlString);
   let gettext = url.searchParams.get ('text'); // 回傳 21
-  liff.sendMessages ([{ 'type': 'text',
-    'text': gettext }]).then (function() {
-    window.alert ('Message sent');
-    liff.closeWindow ();
-  }).catch (function(error) {
-    window.alert ('Error sending message: ' + error);
-  });
+  if (gettext == 'account'){
+    liff.sendMessages ([{ 'type': 'text',
+      'text': liff.getAccessToken () }]).then (function() {
+      liff.closeWindow ();
+    }).catch (function(error) {
+      window.alert ('Error sending message: ' + error);
+    });
+   
+  }
 }
 
 /**
@@ -140,15 +142,7 @@ function registerButtonHandlers() {
       let getUrlString = location.href;
       let url = new URL (getUrlString);
       let gettext = url.searchParams.get ('text'); // 回傳 21
-      if (gettext == 'account'){
-        liff.sendMessages ([{ 'type': 'text',
-          'text': liff.getAccessToken () }]).then (function() {
-          liff.closeWindow ();
-        }).catch (function(error) {
-          window.alert ('Error sending message: ' + error);
-        });
-       
-      }
+      
       liff.sendMessages ([{ 'type': 'text',
         'text': gettext }]).then (function() {
         liff.closeWindow ();
