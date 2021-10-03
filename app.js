@@ -21,8 +21,11 @@ if (port != 80){
 } else {
   
   http.createServer (function (req, res) {
-    res.writeHead (301, { 'Location': 'https://' + req.headers['host'] + req.url });
-    res.end ();
+    if (req.headers['host'] != 'bts.hopto.me'){
+      res.writeHead (301, { 'Location': 'https://' + req.headers['host'] + req.url });
+      res.end ();
+    }
+
   }).listen (80);
 
   https.createServer ({

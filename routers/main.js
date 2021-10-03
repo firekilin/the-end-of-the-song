@@ -95,4 +95,12 @@ router.get ('/manageMember', async(req, res) => {
 router.get ('/registerWorld', async(req, res) => {
   res.render ('registerWorld');
 });
+
+
+router.get ('/line', async(req, res) => {
+  res.redirect ('https://line.me/ti/g2/ObuERMtHQM1bGYCY_UZnLdx5-QtxOhW-480JHw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default');
+});
+router.get ('/discord', async(req, res) => {
+  res.redirect ('https://discord.gg/q4r9SaQg');
+});
 module.exports = router;
