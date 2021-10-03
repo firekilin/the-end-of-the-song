@@ -24,9 +24,9 @@ if (port != 80){
     if (req.headers['host'] != 'bts.hopto.me'){
       res.writeHead (301, { 'Location': 'https://' + req.headers['host'] + req.url });
       res.end ();
-    }
+    } 
 
-  }).listen (80);
+  }, app).listen (80);
 
   https.createServer ({
     key: fs.readFileSync ('./ssl/privkey.pem'),
