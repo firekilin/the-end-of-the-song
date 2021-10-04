@@ -50,5 +50,6 @@ app.use ('/public', express.static ('./public'));
 
 app.use ('/.well-known', express.static ('./.well-known'));
 app.use (function(req, res){
+  
   res.status (404).send ('查無此頁,<a href=\'https://btss.hopto.org/index\'>點此回首頁</a>');
 });
