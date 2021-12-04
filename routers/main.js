@@ -31,9 +31,6 @@ router.get ('/index', async(req, res) => {
 
 //登入
 router.get ('/login', async(req, res) => {
-  if (req.headers['host'] == 'kilincat.servegame.com'){
-    res.redirect ('https://btss.hopto.org/index');
-  }
   let level = await member.login2 (req, res);
   if (level.pass){
     res.redirect ('index');

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>麒麟覺得可以玩 交換禮物</title>
+  <meta name="viewport" content="width=device-width, initial-scale=yes, user-scalable=yes">
+  <!--jquery-->
+  <script src="/plugins/jquery/dist/jquery.min.js"></script>
+  <!--bootstrap-->
+  <link href="/plugins/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="/public/css/xmas.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div id="trueLiff">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                <h5 class="card-title">LINE登入狀態:</h5>
+                <h6 class="card-subtitle mb-2 text-muted">成功</h6>
+                    <!--<p>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                          詳細內容
+                        </button>
+                    </p>
+                      <div >
+                        <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                          <div class="card card-body" style="width: auto;">
+                            <div id="liffData">
+                                <table>
+                                    <tr>
+                                        <th>OS</th>
+                                        <td id="deviceOS" class="textLeft"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Language</th>
+                                        <td id="browserLanguage" class="textLeft"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>LIFF SDK Version</th>
+                                        <td id="sdkVersion" class="textLeft"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>LINE Version</th>
+                                        <td id="lineVersion" class="textLeft"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>isInClient</th>
+                                        <td id="isInClient" class="textLeft"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>isLoggedIn</th>
+                                        <td id="isLoggedIn" class="textLeft"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>-->
+                
+                    <button type="button" class="btn btn-outline-success btn-lg" id="createActivity">建立活動</button>
+                    <button type="button" class="btn btn-outline-danger btn-lg" id="addActivity">加入活動</button>
+                </div>
+            </div>
+
+
+        </div>
+        <div id="falseLiff" class="hidden">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                <h5 class="card-title">LINE登入狀態: </h5>
+                <h6 class="card-subtitle mb-2 text-muted">失敗</h6>
+                <p class="card-text" id="error"></p>
+                </div>
+            </div>
+        </div>
+
+
+        <button class="bi bi-github btn btn-outline-info" id="github">firekilin</button>
+    </div> 
+
+
+
+
+
+
+
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="/public/js/xmas.js"></script>
+</body>
+
+</html>
+
