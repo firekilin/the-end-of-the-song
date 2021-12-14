@@ -14,57 +14,46 @@
 </head>
 
 <body>
+    <input id="activityID" value="<%= activityID %>" hidden >
     <div class="container">
         <div id="trueLiff">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                <h5 class="card-title">LINE登入狀態:</h5>
-                <h6 class="card-subtitle mb-2 text-muted">成功</h6>
-                    <!--<p>
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
-                          詳細內容
-                        </button>
-                    </p>
-                      <div >
-                        <div class="collapse collapse-horizontal" id="collapseWidthExample">
-                          <div class="card card-body" style="width: auto;">
-                            <div id="liffData">
-                                <table>
-                                    <tr>
-                                        <th>OS</th>
-                                        <td id="deviceOS" class="textLeft"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Language</th>
-                                        <td id="browserLanguage" class="textLeft"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>LIFF SDK Version</th>
-                                        <td id="sdkVersion" class="textLeft"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>LINE Version</th>
-                                        <td id="lineVersion" class="textLeft"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>isInClient</th>
-                                        <td id="isInClient" class="textLeft"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>isLoggedIn</th>
-                                        <td id="isLoggedIn" class="textLeft"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>-->
-                
-                    <button type="button" class="btn btn-outline-success btn-lg" id="createActivity">建立活動</button>
-                    <button type="button" class="btn btn-outline-danger btn-lg" id="addActivity">加入活動</button>
+                    <h5 class="card-title">LINE登入狀態:</h5>
+                    <h6 id="loginTrue" class="card-subtitle mb-2 text-muted"></h6>
+                    <h5 class="card-title">活動ID:</h5>
+                    <h6  class="card-subtitle mb-2 text-muted"><%= activityID %></h6>
+                    <h6  class="card-subtitle mb-2 text-muted">金額:<%= limit.limitS  %> ~ <%= limit.limitE %></h6>
+                    <hr>
+                    
+                    <button id="Lottery" class="btn btn-outline-success btn-lg" data-bs-toggle="modal" data-bs-target="#LotteryModal"  hidden disabled>抽獎結果</button>
+                    <button id="startLottery" class="btn btn-outline-info btn-lg"  hidden disabled>開始抽獎</button>
+                    <ul id="memberList" class="list-group">
+                      
+                    </ul>
+                    <button id="out" class="btn btn-outline-danger btn-lg" disabled>退出活動</button>
                 </div>
             </div>
-
+            <div class="modal" id="LotteryModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">抽獎結果</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      
+                          
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="share" class="btn btn-outline-success" data-bs-dismiss="modal">下載</button>
+                        <button type="button" id="share" class="btn btn-outline-info" data-bs-dismiss="modal">分享</button>
+                      <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">確定</button>
+                     
+                    </div>
+                  </div>
+                </div>
+            </div>
 
         </div>
         <div id="falseLiff" class="hidden">
@@ -88,7 +77,8 @@
 
 
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script src="/public/js/xmas.js"></script>
+    <script src="/public/js/xmas/lobby.js"></script>
+    <script src="/public/js/xmas/Liff.js"></script>
 </body>
 
 </html>

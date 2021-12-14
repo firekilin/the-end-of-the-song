@@ -72,7 +72,7 @@ router.post ('/memberList', async(req, res) => {
   res.send (await member.memberList (req, res));
 });
 
-//修改抽獎權
+//修改抽獎權
 router.post ('/memberStatus', async(req, res) => {
   res.send (await member.memberStatus (req, res));
 });

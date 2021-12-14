@@ -15,7 +15,7 @@
 
 <body>
     <div class="container">
-        <div id="trueLiff">
+        <div id="trueLiff" class="hidden">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title">LINE登入狀態:</h5>
@@ -62,7 +62,7 @@
                 
                     <button type="button" class="btn btn-outline-success btn-lg"  data-bs-toggle="modal" data-bs-target="#createActivityModal">建立活動</button>
                     <button type="button" class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#addActivityModal">加入活動</button>
-                    <button type="button" class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#userSetting">收件資訊</button>
+                    <button type="button" class="btn btn-outline-info btn-lg" data-bs-toggle="modal" data-bs-target="#userSetting" id="memberInfo">收件資訊</button>
                     <p>
                         <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false">
                             目前活動
@@ -130,16 +130,22 @@
                     </div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
-                            <span class="input-group-text"  >活動名稱</span>
-                            <input type="text" class="form-control" placeholder="活動名稱">
+                            <span class="input-group-text"  >活動ID</span>
+                            <input type="text" id="addActivityID" class="form-control" placeholder="活動ID">
+                            <button type="button"  class="btn btn-primary"  id="checkActivityName">確認ID是否存在</button>
+                           
                         </div>
                         <div class="input-group mb-3">
+                          <span class="input-group-text"  >活動名稱</span>
+                          <input type="text" id="addActivityName" class="form-control" placeholder="" readonly>
+                      </div>
+                        <div class="input-group mb-3">
                             <span class="input-group-text"  >活動密碼</span>
-                            <input type="password" class="form-control" placeholder="*******">
+                            <input type="password" id="addActivityPassword" class="form-control" placeholder="*******">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">報名者名稱</span>
-                            <input type="text" class="form-control" placeholder="顯示用" >
+                            <input type="text" id="addActivityMember" class="form-control" placeholder="顯示用" >
                         </div>
                           
                     </div>
@@ -157,22 +163,26 @@
                       <h5 class="modal-title">收件資訊</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                      <p>採保密方式，公開模式、匿名模式，皆只有送禮人才可得知</p>
+                    <div class="modal-body">
+                      <p>採保密方式，只有送禮人才可得知</p>
+                      <p>(若實體交換，不需填寫)</p>
                       <hr>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">下限$</span>
-                            <input type="text" id="activityLimitS" class="form-control" placeholder="下限金額" >
+                            <span class="input-group-text">真實姓名</span>
+                            <input type="text" id="realName" class="form-control" placeholder="王XX" >
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">上限$</span>
-                            <input type="text" id="activityLimitE" class="form-control" placeholder="上限金額" >
+                            <span class="input-group-text">手機號碼</span>
+                            <input type="text" id="phone" class="form-control" placeholder="09XXXXXXXX" >
                         </div>
-                          
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                      <button type="button" class="btn btn-primary" id="createActivity">建立</button>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">便利商店</span>
+                            <input type="text" id="shop" class="form-control" placeholder="7-11 光峰門市 (957768)" >
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="editMember">建立</button>
+                          </div>
                     </div>
                   </div>
                 </div>
@@ -180,7 +190,7 @@
 
 
         </div>
-        <div id="falseLiff" class="hidden">
+        <div id="falseLiff" >
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title">LINE登入狀態: </h5>
@@ -190,7 +200,7 @@
             </div>
         </div>
 
-
+        <button class="bi bi-github btn btn-outline-success" id="share">分享~</button>
         <button class="bi bi-github btn btn-outline-info" id="github">firekilin</button>
         
     </div> 
@@ -201,7 +211,8 @@
 
 
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script src="/public/js/xmas.js"></script>
+    <script src="/public/js/xmas/xmas.js"></script>
+    <script src="/public/js/xmas/Liff.js"></script>
 </body>
 
 </html>
