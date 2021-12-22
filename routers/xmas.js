@@ -22,7 +22,7 @@ router.get ('/send-id', async(req, res) => {
 
 //抽獎頁面
 router.get ('/lobby/:id', async(req, res) => {
-  res.render ('xmas/lobby', { activityID: req.params.id,limit:await xmas.limitget(req,res) }); //memberList , activityStatus , sendMemberinfo
+  res.render ('xmas/lobby', { activityID: req.params.id, limit: await xmas.limitget (req, res) }); //memberList , activityStatus , sendMemberinfo
 });
 
 //登入會員
@@ -37,8 +37,8 @@ router.post ('/activityList', async(req, res) => {
 });
 
 //確認活動名稱
-router.post('/checkActivityName',async(req,res)=>{
-  res.send(await xmas.checkActivityName(req,res));
+router.post ('/checkActivityName', async(req, res) => {
+  res.send (await xmas.checkActivityName (req, res));
 });
 
 //加入活動
@@ -77,7 +77,7 @@ router.post ('/outActivity', async(req, res) => {
 });
 
 //開始抽獎
-router.post('/startLottery',async(req,res)=>{
-  res.send(await xmas.startLottery(req,res));
-})
+router.post ('/startLottery', async(req, res) => {
+  res.send (await xmas.startLottery (req, res));
+});
 module.exports = router;

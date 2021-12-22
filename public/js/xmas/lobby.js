@@ -2,25 +2,25 @@ let liffComplete = () => {
   getMemberList ();
   checkStatus ();
   
-$ ('#out').on ('click', () => {
-  liff.getProfile ().then (function(profile) {
-    $.post ('/xmas/outActivity', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
-      alert (data);
-      location.href = "/xmas";
-    }).fail (function(response) {
-      window.alert ('資料庫出問題');
-    });
+  $ ('#out').on ('click', () => {
+    liff.getProfile ().then (function(profile) {
+      $.post ('/xmas/outActivity', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
+        alert (data);
+        location.href = '/xmas';
+      }).fail (function(response) {
+        window.alert ('資料庫出問題');
+      });
    
-  }).catch (function(error) {
-    window.alert ('登入失敗請使用LINE');
-    document.getElementById ('trueLiff').classList.add ('hidden');
-    document.getElementById ('falseLiff').classList.remove ('hidden');
-    document.getElementById ('error').innerHTML = `註冊失敗
+    }).catch (function(error) {
+      window.alert ('登入失敗請使用LINE');
+      document.getElementById ('trueLiff').classList.add ('hidden');
+      document.getElementById ('falseLiff').classList.remove ('hidden');
+      document.getElementById ('error').innerHTML = `註冊失敗
     <p><a class="btn btn-outline-success" href="line://app/1656461762-GOPndwoP"><i class="bi bi-arrow-left-circle-fill"></i>點此進line</a></p>`;
 
 
+    });
   });
-});
 
 };
 
@@ -54,18 +54,18 @@ let checkStatus = () => {
         $ ('#startLottery').removeAttr ('hidden');
         $ ('#startLottery').removeAttr ('disabled');
         $ ('#out').removeAttr ('disabled');
-        $ ('#out').innerHTML = '主辦者退出 將刪除活動';
+        $ ('#out')[0].innerHTML = '主辦者退出 將刪除活動';
       } else if (data.leader && data.status) {
         $ ('#Lottery').removeAttr ('hidden');
         $ ('#Lottery').removeAttr ('disabled');
-        $ ('#out').innerHTML = '已結束抽獎 無法退出';
+        $ ('#out')[0].innerHTML = '已結束抽獎 無法退出';
       } else if (data.status){
         $ ('#Lottery').removeAttr ('hidden');
         $ ('#Lottery').removeAttr ('disabled');
-        $ ('#out').innerHTML = '已結束抽獎 無法退出';
+        $ ('#out')[0].innerHTML = '已結束抽獎 無法退出';
       } else {
         $ ('#out').removeAttr ('disabled');
-        $ ('#Lottery').innerHTML = '抽獎結果(尚未抽獎)';
+        $ ('#Lottery')[0].innerHTML = '抽獎結果(尚未抽獎)';
       }
 
       
@@ -80,3 +80,24 @@ let checkStatus = () => {
     <p><a class="btn btn-outline-success" href="line://app/1656461762-GOPndwoP"><i class="bi bi-arrow-left-circle-fill"></i>點此進line</a></p>`;
   });
 };
+
+$ ('#startLottery').on ('click', () => {
+  liff.getProfile ().then (function(profile) {
+    $.post ('/xmas/startLottery', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
+      alert (data);
+      getMemberList ();
+      checkStatus ();
+    }).fail (function(response) {
+      window.alert ('資料庫出問題');
+    });
+ 
+  }).catch (function(error) {
+    window.alert ('登入失敗請使用LINE');
+    document.getElementById ('trueLiff').classList.add ('hidden');
+    document.getElementById ('falseLiff').classList.remove ('hidden');
+    document.getElementById ('error').innerHTML = `註冊失敗
+  <p><a class="btn btn-outline-success" href="line://app/1656461762-GOPndwoP"><i class="bi bi-arrow-left-circle-fill"></i>點此進line</a></p>`;
+
+
+  });
+});

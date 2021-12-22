@@ -47,16 +47,14 @@ let liffComplete = () => {
     });
   });
 
-  $('#checkActivityName').on ('click', () => {
+  $ ('#checkActivityName').on ('click', () => {
     liff.getProfile ().then (function(profile) {
-      $.post ('/xmas/checkActivityName', { 
-        account: profile.userId,
-        addActivityID:$('#addActivityID').val()
-      }, (data, status) => {
-        if(data){
-          $('#addActivityName').val(data);
-        }else{
-          alert('不存在');
+      $.post ('/xmas/checkActivityName', { account: profile.userId,
+        addActivityID: $ ('#addActivityID').val () }, (data, status) => {
+        if (data){
+          $ ('#addActivityName').val (data);
+        } else {
+          alert ('不存在');
         }
       
       }).fail (function(response) {
@@ -165,80 +163,72 @@ let liffComplete = () => {
   });
 
 
-  $('#share').on('click',()=>{
+  $ ('#share').on ('click', () => {
   //分享訊息
-        if (liff.isApiAvailable ('shareTargetPicker')) {
-          liff.shareTargetPicker ([
-{
-  "type": "flex",
-  "altText": "交換禮物",
-  "contents": {
-              "type": "bubble",
-              "hero": {
-                "type": "image",
-                "size": "full",
-                "aspectRatio": "20:13",
-                "aspectMode": "cover",
-                "action": {
-                  "type": "uri",
-                  "uri": "http://linecorp.com/"
+    if (liff.isApiAvailable ('shareTargetPicker')) {
+      liff.shareTargetPicker ([
+        {
+          'type': 'flex',
+          'altText': '交換禮物',
+          'contents': {
+            'type': 'bubble',
+            'hero': {
+              'type': 'image',
+              'size': 'full',
+              'aspectRatio': '20:13',
+              'aspectMode': 'cover',
+              'action': { 'type': 'uri',
+                'uri': 'http://linecorp.com/' },
+              'url': 'https://kilincat.servegame.com/public/img/xmasIMG.jpg'
+            },
+            'footer': {
+              'type': 'box',
+              'layout': 'vertical',
+              'spacing': 'sm',
+              'contents': [
+                {
+                  'type': 'text',
+                  'text': '想寫程式就寫程式',
+                  'align': 'center',
+                  'color': '#aaaaaa',
+                  'size': '12px'
                 },
-                "url": "https://kilincat.servegame.com/public/img/xmasIMG.jpg"
-              },
-              "footer": {
-                "type": "box",
-                "layout": "vertical",
-                "spacing": "sm",
-                "contents": [
-                    {
-                    "type": "text",
-                    "text": "想寫程式就寫程式",
-                    "align": "center",
-                    "color": "#aaaaaa",
-                    "size": "12px"
-                  },
-                  {
-                    "type": "text",
-                    "text": "所產生的 Line LIFF APP",
-                    "align": "center",
-                    "color": "#aaaaaa",
-                    "size": "12px"
-                  },
-                  {
-                    "type": "text",
-                    "text": "~ 交換禮物程式 ~ ",
-                    "align": "center",
-                    "color": "#555555",
-                    "size": "20px"
-                  },
-                  {
-                    "type": "separator"
-                  },
-                  {
-                    "type": "button",
-                    "style": "link",
-                    "height": "sm",
-                    "action": {
-                      "type": "uri",
-                      "label": "進入",
-                      "uri": "line://app/1656461762-GOPndwoP"
-                    }
-                  },
-                  {
-                    "type": "spacer",
-                    "size": "sm"
+                {
+                  'type': 'text',
+                  'text': '所產生的 Line LIFF APP',
+                  'align': 'center',
+                  'color': '#aaaaaa',
+                  'size': '12px'
+                },
+                {
+                  'type': 'text',
+                  'text': '~ 交換禮物程式 ~ ',
+                  'align': 'center',
+                  'color': '#555555',
+                  'size': '20px'
+                },
+                { 'type': 'separator' },
+                {
+                  'type': 'button',
+                  'style': 'link',
+                  'height': 'sm',
+                  'action': {
+                    'type': 'uri',
+                    'label': '進入',
+                    'uri': 'line://app/1656461762-GOPndwoP'
                   }
-                ],
-                "flex": 0
-              }
-            } 
-}
-          ],{
-        isMultiple: true,
-      });
-        } else {
-          alert('失敗');
+                },
+                { 'type': 'spacer',
+                  'size': 'sm' }
+              ],
+              'flex': 0
+            }
+          } 
         }
+      ], { isMultiple: true, });
+    } else {
+      alert ('失敗');
+    }
       
   });
 };

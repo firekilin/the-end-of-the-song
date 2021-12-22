@@ -258,13 +258,38 @@ exports.limitget = async(req, res) => {
 //開始抽籤
 exports.startLottery = async(req, res) => {
   try {
-    let check = await query (`select xActivity_limitS,xActivity_limitE from xmas_activity where xactivity_id='${req.params.id}'`);
-    if (check[0]){
-      return { limitS: check[0].xActivity_limitS, limitE: check[0].xActivity_limitE };
+    let check = await query (`SELECT count(*) as leader
+    from xmas_activity
+      where xActivity_id='${req.body.activityID}' and xmember_id=(select xMember_id from xmas_member 
+      where xmember_account='${req.body.account}') `);
+
+    if (check[0].leader > 0){
+      let check2 = await query (`SELECT xMember_send FROM end_song.xmas_activity_list where xactivity_id='${req.body.activityID}'`);
+      if (check2[0]){
+        let memberlist = [];
+        memberlist.length = check2.length;
+        for (let i = 0;i < check2.length;i ++){
+          let setnewmember = 0;
+          do {
+            setnewmember = Math.floor (Math.random () * check2.length);
+          } while (memberlist[setnewmember] != undefined);
+          memberlist[setnewmember] = check2[i].xMember_send;
+        }
+        for (let i = 0;i < memberlist.length;i ++){
+           
+          await query (`UPDATE xmas_activity_list SET xMember_receiver = '${memberlist[(i + 1) == memberlist.length ? 0 : i + 1]}' WHERE (xMember_send = '${memberlist[i]}' and xActivity_ID = '${req.body.activityID}');`);
+        }
+        await query (`UPDATE xmas_activity SET xActivity_status = '1' WHERE (xActivity_id = '${req.body.activityID}');`);
+        return true;
+      } else {
+        return false;
+      }
+      
     } else {
       return false;
     }
   } catch (e){
+    console.log (e);
     return false;
   }
 };
