@@ -80,4 +80,6 @@ router.post ('/outActivity', async(req, res) => {
 router.post ('/startLottery', async(req, res) => {
   res.send (await xmas.startLottery (req, res));
 });
+
+
 module.exports = router;
