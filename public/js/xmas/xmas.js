@@ -5,7 +5,7 @@ let liffComplete = () => {
 
   $ ('#createActivity').on ('click', () => {
     liff.getProfile ().then (function(profile) {
-      $.post ('/xmas/createActivity', { 
+      $.post ('./xmas/createActivity', { 
         account: profile.userId,
         activityName: $ ('#activityName').val (),
         activityPassword: $ ('#activityPassword').val (),
@@ -49,7 +49,7 @@ let liffComplete = () => {
 
   $ ('#checkActivityName').on ('click', () => {
     liff.getProfile ().then (function(profile) {
-      $.post ('/xmas/checkActivityName', { account: profile.userId,
+      $.post ('./xmas/checkActivityName', { account: profile.userId,
         addActivityID: $ ('#addActivityID').val () }, (data, status) => {
         if (data){
           $ ('#addActivityName').val (data);
@@ -75,7 +75,7 @@ let liffComplete = () => {
 
   $ ('#addActivity').on ('click', () => {
     liff.getProfile ().then (function(profile) {
-      $.post ('/xmas/addActivity', {
+      $.post ('./xmas/addActivity', {
         account: profile.userId,
         addActivityID: $ ('#addActivityID').val (),
         addActivityPassword: $ ('#addActivityPassword').val (),
@@ -110,7 +110,7 @@ let liffComplete = () => {
 
   $ ('#editMember').on ('click', () => {
     liff.getProfile ().then (function(profile) {
-      $.post ('/xmas/editMember', {
+      $.post ('./xmas/editMember', {
         account: profile.userId,
         realName: $ ('#realName').val (),
         phone: $ ('#phone').val (),
@@ -143,7 +143,7 @@ let liffComplete = () => {
 
   $ ('#memberInfo').on ('click', () => {
     liff.getProfile ().then (function(profile) {
-      $.post ('/xmas/memberInfo', { account: profile.userId }, (data, status) => {
+      $.post ('./xmas/memberInfo', { account: profile.userId }, (data, status) => {
         if (data){
           $ ('#realName').val (data.realName);
           $ ('#phone').val (data.phone);
@@ -179,7 +179,7 @@ let liffComplete = () => {
               'aspectMode': 'cover',
               'action': { 'type': 'uri',
                 'uri': 'http://linecorp.com/' },
-              'url': 'https://kilincat.servegame.com/public/img/xmasIMG.jpg'
+              'url': './public/img/xmasIMG.jpg'
             },
             'footer': {
               'type': 'box',
@@ -236,13 +236,13 @@ let liffComplete = () => {
 
 let getjoinActivity = () => {
   liff.getProfile ().then (function(profile) {
-    $.post ('/xmas/activityList', { account: profile.userId }, (data, status) => {
+    $.post ('./xmas/activityList', { account: profile.userId }, (data, status) => {
       $ ('#listActivity').children ().remove ();
       if (data.length == 0){
         $ ('#listActivity').append (' <a class="bi bi-gift" href=""  >無活動 (點我也沒用)</a>');
       }
       for (let i = 0;i < data.length;i ++){
-        $ ('#listActivity').append (' <a class="bi bi-gift" href="/xmas/lobby/' + data[i].href + '"  >' + data[i].activityName + '(' + data[i].userName + ')</a>');
+        $ ('#listActivity').append (' <a class="bi bi-gift" href="./xmas/lobby/' + data[i].href + '"  >' + data[i].activityName + '(' + data[i].userName + ')</a>');
       }
       
     }).fail (function(response) {

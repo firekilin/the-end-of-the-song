@@ -8,7 +8,7 @@ window.onload = function() {
   // if node is used, fetch the environment variable and pass it to the LIFF method
   // otherwise, pass defaultLiffId
   if (useNodeJS) {
-    fetch ('/xmas/send-id')
+    fetch ('./xmas/send-id')
       .then (function(reqResponse) {
         return reqResponse.json ();
       })
@@ -69,7 +69,7 @@ function initializeLiff(myLiffId) {
 function initializeApp() {
 
   liff.getProfile ().then (function(profile) {
-    $.post ('/xmas/member', { account: profile.userId }, (data, status) => {
+    $.post ('./xmas/member', { account: profile.userId }, (data, status) => {
       $ ('#loginTrue').append ('成功');
       liffComplete ();
     }).fail (function(response) {

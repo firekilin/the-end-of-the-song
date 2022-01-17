@@ -4,9 +4,9 @@ let liffComplete = () => {
   
   $ ('#out').on ('click', () => {
     liff.getProfile ().then (function(profile) {
-      $.post ('/xmas/outActivity', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
+      $.post ('./xmas/outActivity', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
         alert (data);
-        location.href = '/xmas';
+        location.href = './xmas';
       }).fail (function(response) {
         window.alert ('資料庫出問題');
       });
@@ -27,7 +27,7 @@ let liffComplete = () => {
 
 let getMemberList = () => {
   liff.getProfile ().then (function(profile) {
-    $.post ('/xmas/memberList', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
+    $.post ('./xmas/memberList', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
       $ ('#memberList').children ().remove ();
       var colorful = ['success', 'danger', 'warning', 'info'];
       for (let i = 0;i < data.length;i ++){
@@ -49,7 +49,7 @@ let getMemberList = () => {
 
 let checkStatus = () => {
   liff.getProfile ().then (function(profile) {
-    $.post ('/xmas/checkActivity', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
+    $.post ('./xmas/checkActivity', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
       if (data.leader && ! data.status){
         $ ('#startLottery').removeAttr ('hidden');
         $ ('#startLottery').removeAttr ('disabled');
@@ -83,7 +83,7 @@ let checkStatus = () => {
 
 $ ('#startLottery').on ('click', () => {
   liff.getProfile ().then (function(profile) {
-    $.post ('/xmas/startLottery', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
+    $.post ('./xmas/startLottery', { account: profile.userId, activityID: $ ('#activityID').val () }, (data, status) => {
       alert (data);
       getMemberList ();
       checkStatus ();
