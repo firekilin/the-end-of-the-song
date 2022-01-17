@@ -4,7 +4,7 @@ var manage = this.manage ? () => {throw new Error ();} : {};
 
 $ (() => {
   manage.select = () => {
-    $.post ('/api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
       for (let i = 0;i < data.productList.length;i ++){
         $ ('#productSelect').append (new Option (data.productList[i].productName, data.productList[i].productId, false));
       }
@@ -20,7 +20,7 @@ $ (() => {
     for (let i = 0;i < $ ('.product').length;i ++){
       productId.push ($ ('.product')[i].value);
     }
-    $.post ('/api/starting', { productId: productId, MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/starting', { productId: productId, MW: $ ('#MWId').val () }, (data, status) => {
       alert (data);
     });
     $ ('#sendtotal')[0].innerHTML = '';
@@ -31,7 +31,7 @@ $ (() => {
     for (let i = 0;i < $ ('.product').length;i ++){
       productId.push ($ ('.product')[i].value);
     }
-    $.post ('/api/startingRe', { productId: productId, MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/startingRe', { productId: productId, MW: $ ('#MWId').val () }, (data, status) => {
       alert (data);
     });
     $ ('#sendtotal')[0].innerHTML = '';
@@ -42,7 +42,7 @@ $ (() => {
     for (let i = 0;i < $ ('.product').length;i ++){
       productId.push ($ ('.product')[i].value);
     }
-    $.post ('/api/setDatestart', { 
+    $.post ('./api/setDatestart', { 
       re: re,
       productId: productId,
       setDate: $ (`#setDate`).val (),

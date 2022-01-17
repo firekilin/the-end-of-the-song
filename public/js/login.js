@@ -4,7 +4,7 @@ var login = this.login ? () => {throw new Error ();} : {};
 
 $ (() => {
   login.login = () => {
-    $.post ('/api/logining', {
+    $.post ('./api/logining', {
       MW: $ ('#MWSelect').val (), password: $ ('#password').val (), name: $ ('#name').val () 
     }, (data, status) => {
       if (data != true){
@@ -15,7 +15,7 @@ $ (() => {
     });
   };
   login.select = () => {
-    $.post ('/api/MWList', {}, (data, status) => {
+    $.post ('./api/MWList', {}, (data, status) => {
       for (let i = 0;i < data.length;i ++){
         $ ('#MWSelect').append (new Option (data[i].name, data[i].id, false));
       }

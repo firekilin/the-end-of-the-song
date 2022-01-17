@@ -4,7 +4,7 @@ var member = this.member ? () => {throw new Error ();} : {};
 
 $ (() => {
   member.loading = () => {
-    $.post ('/api/memberList', { MWId: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/memberList', { MWId: $ ('#MWId').val () }, (data, status) => {
       $ ('#indexList')[0].innerHTML = '';
       for (let i = 0;i < data.length;i ++){
         $ ('#indexList')[0].innerHTML += `<tr>
@@ -20,7 +20,7 @@ $ (() => {
   };
 
   member.change = (memberId) => {
-    $.post ('/api/memberStatus', { memberId: memberId }, (data, status) => {
+    $.post ('./api/memberStatus', { memberId: memberId }, (data, status) => {
       alert (data);
       member.loading ();
     });
@@ -28,14 +28,14 @@ $ (() => {
 
   //清除玩家報名
   member.delplayer = (memberId) => {
-    $.post ('/api/memberDel', { memberId: memberId }, (data, status) => {
+    $.post ('./api/memberDel', { memberId: memberId }, (data, status) => {
       alert (data);
       member.loading ();
     });
   };
   //清除玩家報名
   member.deleteplayer = (memberId) => {
-    $.post ('/api/memberDelete', { memberId: memberId }, (data, status) => {
+    $.post ('./api/memberDelete', { memberId: memberId }, (data, status) => {
       alert (data);
       member.loading ();
     });
@@ -43,14 +43,14 @@ $ (() => {
 
   //取得密碼
   member.getPassword = () => {
-    $.post ('/api/getMWPassword', { MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/getMWPassword', { MW: $ ('#MWId').val () }, (data, status) => {
       $ ('#MWpassword').val (data.password);
     });
   };
   
   //修改密碼
   member.setPassword = () => {
-    $.post ('/api/setMWPassword', { MWPassword: $ ('#MWpassword').val (), MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/setMWPassword', { MWPassword: $ ('#MWpassword').val (), MW: $ ('#MWId').val () }, (data, status) => {
       alert (data);
       member.getPassword ();
     });

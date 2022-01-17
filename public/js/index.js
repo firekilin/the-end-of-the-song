@@ -6,7 +6,7 @@ $ (() => {
 
   //載入獎品
   index.loading = () => {
-    $.post ('/api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
       $ ('#indexList')[0].innerHTML = '';
       if (data.pass){
         $ ('#addproduct')[0].hidden = false;
@@ -63,7 +63,7 @@ $ (() => {
   };
   
   index.allreload = (productId, pass) => {
-    $.post ('/api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/productList', { member: $ ('#memberId').val (), MW: $ ('#MWId').val () }, (data, status) => {
       $ ('#indexList')[0].innerHTML = '';
       if (data.pass){
         $ ('#addproduct')[0].hidden = false;
@@ -115,7 +115,7 @@ $ (() => {
         }
       }
      
-      $.post ('/api/getList', { productId: productId }, (data, status) => {
+      $.post ('./api/getList', { productId: productId }, (data, status) => {
         let yesList = '';
         let noList = '';
         if (pass){
@@ -147,7 +147,7 @@ $ (() => {
 
   //reset
   index.reSet = (productId) => {
-    $.post ('/api/reSet', { productId: productId }, (data, statue) => {
+    $.post ('./api/reSet', { productId: productId }, (data, statue) => {
       alert (data);
       index.allreload (productId, true);
     });
@@ -155,7 +155,7 @@ $ (() => {
 
   //取得未報名清單
   index.getcheckin = (productId) => {
-    $.post ('/api/getcheckin', { productId: productId }, (data, status) => {
+    $.post ('./api/getcheckin', { productId: productId }, (data, status) => {
       for (let i = 0;i < data.length;i ++){
         $ (`#yesSelect${productId}`).append (new Option (data[i].memberName, data[i].memberId, false));
         $ (`#noSelect${productId}`).append (new Option (data[i].memberName, data[i].memberId, false));
@@ -166,7 +166,7 @@ $ (() => {
   //名單
   index.getList = (productId, pass) => {
 
-    $.post ('/api/getList', { productId: productId }, (data, status) => {
+    $.post ('./api/getList', { productId: productId }, (data, status) => {
       let yesList = '';
       let noList = '';
       if (pass){
@@ -200,7 +200,7 @@ $ (() => {
  
   //報名
   index.checkin = (productId) => {
-    $.post ('/api/checkin', { productId: productId, memberId: $ ('#memberId').val () }, (data, status) => {
+    $.post ('./api/checkin', { productId: productId, memberId: $ ('#memberId').val () }, (data, status) => {
       if (data == '失敗'){
         alert (data);
       }
@@ -212,7 +212,7 @@ $ (() => {
   //管理員報名
   index.checkin2 = (check, productId) => {
     if (check == 0){
-      $.post ('/api/checkin2', {
+      $.post ('./api/checkin2', {
         productId: productId,
         memberId: $ (`#yesSelect${productId}`).val (),
         statusCheck: 0 
@@ -223,7 +223,7 @@ $ (() => {
         index.allreload (productId, true);
       } );
     } else {
-      $.post ('/api/checkin2', {
+      $.post ('./api/checkin2', {
         productId: productId,
         memberId: $ (`#noSelect${productId}`).val (),
         statusCheck: 1 
@@ -240,7 +240,7 @@ $ (() => {
   //新增所有玩家進名單
   index.checkin3 = (check, productId) => {
     if (check == 0){
-      $.post ('/api/checkin3', { productId: productId,
+      $.post ('./api/checkin3', { productId: productId,
         statusCheck: 0 }, (data, status) => {
         if (data == '失敗'){
           alert (data);
@@ -248,7 +248,7 @@ $ (() => {
         index.allreload (productId, true);
       } );
     } else {
-      $.post ('/api/checkin3', { productId: productId,
+      $.post ('./api/checkin3', { productId: productId,
         statusCheck: 1 }, (data, status) => {
         if (data == '失敗'){
           alert (data);
@@ -260,7 +260,7 @@ $ (() => {
 
   //管理員刪除報名
   index.deleteMember = (PKId, productId) => {
-    $.post ('/api/deleteMember', { PKId: PKId }, (data, status) => {
+    $.post ('./api/deleteMember', { PKId: PKId }, (data, status) => {
       if (data == '失敗'){
         alert (data);
       }
@@ -270,7 +270,7 @@ $ (() => {
  
   //新增獎品
   index.addproduct = () => {
-    $.post ('/api/addProduct', {
+    $.post ('./api/addProduct', {
       password: $ ('#password').val (),
       MW: $ ('#MWId').val (),
       productName: $ ('#productName').val () 
@@ -282,7 +282,7 @@ $ (() => {
 
   //設定存在
   index.setstar = (productId) => {
-    $.post ('/api/setstar', { password: $ ('#password').val (), productId: productId }, (data, status) => {
+    $.post ('./api/setstar', { password: $ ('#password').val (), productId: productId }, (data, status) => {
       alert (data);
       index.loading ();
     });
@@ -290,7 +290,7 @@ $ (() => {
 
   //刪除商品
   index.delproduct = (productId) => {
-    $.post ('/api/delproduct', { password: $ ('#password').val (), productId: productId }, (data, status) => {
+    $.post ('./api/delproduct', { password: $ ('#password').val (), productId: productId }, (data, status) => {
       alert (data);
       index.loading ();
     });

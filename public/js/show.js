@@ -7,7 +7,7 @@ $ (() => {
   //載入獎品公告
   show.loading = () => {
     $ ('#indexList')[0].innerHTML = '';
-    $.post ('/api/showing', { MW: $ ('#MWId').val () }, (data, status) => {
+    $.post ('./api/showing', { MW: $ ('#MWId').val () }, (data, status) => {
 
       let setdate = new Date ();
       for (let i = 0;i < data.length;i ++){
@@ -64,7 +64,7 @@ $ (() => {
   };
   //顯示報名成員
   show.open = (showId) => {
-    $.post ('/api/showjoin', { showId: showId }, (data, status) => {
+    $.post ('./api/showjoin', { showId: showId }, (data, status) => {
       $ (`#showingtd${showId}`)[0].innerHTML = '';
       for (let i = 0;i < data.length;i ++){
         $ (`#showingtd${showId}`)[0].innerHTML += `<p>${data[i].memberName}</p>`;
